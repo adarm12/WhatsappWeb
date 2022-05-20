@@ -49,7 +49,8 @@ public class WebWindow extends JPanel {
             List<WebElement> pic = web.findElements(By.className("web"));
             if (pic.size() > 0) {
                 System.out.println("find");
-                enterLabel();
+//                enterLabel();
+//                repaint();
             }
         });
     }

@@ -24,6 +24,7 @@ public class WebWindow extends JPanel {
 
         this.enterButton = new MyJButton("Enter", width / 2, height / 2, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT).getButton();
         this.add(this.enterButton);
+
         enter();
 
         this.background = new ImageIcon("background.png");

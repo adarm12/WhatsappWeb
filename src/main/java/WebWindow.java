@@ -4,66 +4,48 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
-public class WebWindow extends JFrame {
+public class WebWindow extends JPanel {
 
     public static final String WEB = "https://web.whatsapp.com/";
-
-    public static final int WINDOW_X = 0, WINDOW_Y = 0, WINDOW_HEIGHT = 955, WINDOW_WIDTH = 1400;
+    public static final int ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
 
     private ImageIcon background;
     private JButton enterButton;
 
-    public WebWindow() {
+    public WebWindow(int x, int y, int width, int height) {
+        System.setProperty("webdriver.chrome.driver", "C:\\1234\\driver.exe");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("user-data-air=C:\\Users\\shani\\AppData\\Local\\Temp\\scoped_dir4008_2001821348\\Default");
 
-        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        this.setBounds(x, y, width, height);
         this.setLayout(null);
-        this.setLocationRelativeTo(null);
+
+        this.enterButton = new MyJButton("Enter", width / 2, height / 2, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT).getButton();
+        this.add(this.enterButton);
+        enter();
 
         this.background = new ImageIcon("background.png");
-        addEnterButton();
-
         this.setVisible(true);
-    }
-
-    public void addEnterButton() {
-        this.enterButton = addButton("התחבר", (WINDOW_WIDTH / 2) - (100),
-                (WINDOW_HEIGHT / 2) - (100), 200, 200);
-        repaint();
-        enter();
-    }
-
-    private JButton addButton(String buttonName, int x, int y, int width, int height) {
-        JButton addButton = new JButton(buttonName);
-        this.add(addButton);
-        addButton.setBounds(x, y, width, height);
-        return addButton;
     }
 
     private void enter() {
         this.enterButton.addActionListener((event) -> {
             this.enterButton.setVisible(false);
             repaint();
-            System.setProperty("webdriver.chrome.driver", "C:\\Users\\adarm\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("user-data-dir=c:C:\\Users\\adarm\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\n");
             ChromeDriver driver = new ChromeDriver();
             driver.get(WEB);
             driver.manage().window().maximize();
         });
     }
 
-    public void paint(Graphics graphics) {
+    public void paintComponent(Graphics graphics) {
         graphics.drawImage(this.background.getImage(), 0, 0,
-                WINDOW_WIDTH, WINDOW_HEIGHT, null);
+                MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_HEIGHT, null);
     }
 
-    public static void main(String[] args) {
-        new WebWindow();
-    }
+
 }
 
 

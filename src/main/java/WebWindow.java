@@ -25,6 +25,8 @@ public class WebWindow extends JFrame {
 
         this.background = new ImageIcon("background.png");
         addEnterButton();
+
+        this.setVisible(true);
     }
 
     public void addEnterButton() {
@@ -36,7 +38,6 @@ public class WebWindow extends JFrame {
 
     private JButton addButton(String buttonName, int x, int y, int width, int height) {
         JButton addButton = new JButton(buttonName);
-        this.setVisible(true);
         this.add(addButton);
         addButton.setBounds(x, y, width, height);
         return addButton;
@@ -45,6 +46,7 @@ public class WebWindow extends JFrame {
     private void enter() {
         this.enterButton.addActionListener((event) -> {
             this.enterButton.setVisible(false);
+            repaint();
             System.setProperty("webdriver.chrome.driver", "C:\\Users\\adarm\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("user-data-dir=c:C:\\Users\\adarm\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\n");

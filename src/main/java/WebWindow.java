@@ -9,6 +9,9 @@ import org.openqa.selenium.remote.tracing.opentelemetry.SeleniumSpanExporter;
 import javax.swing.*;
 import java.awt.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class WebWindow extends JPanel {
@@ -24,7 +27,7 @@ public class WebWindow extends JPanel {
     public static final int MARGIN_BETWEEN = 100;
     public static final int MESSAGE_TITLE_MARGIN = 310;
     public static final int MESSAGE_TEXT_MARGIN_X = 210, MESSAGE_TEXT_WIDTH = 500, MESSAGE_TEXT_HEIGHT = 100;
-    public static final int ENTER_LABEL_X = 100,ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
+    public static final int ENTER_LABEL_X = 100, ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
     public static final int LENGTH_PHONE_NUMBER = 10;
     public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "972";
 
@@ -36,6 +39,7 @@ public class WebWindow extends JPanel {
     private JTextField phoneNumberTextField;
     private JLabel messageTitle;
     private JTextField messageTextField;
+    private JLabel messageForUser;
 
 
     public WebWindow(int x, int y, int width, int height) {
@@ -69,34 +73,75 @@ public class WebWindow extends JPanel {
                 messageTitle.getY() + messageTitle.getHeight(), MESSAGE_TEXT_WIDTH, MESSAGE_TEXT_HEIGHT);
         this.add(messageTextField);
 
-
-//        this.phoneNumberTextField = newTextField(this.phoneNumTitle.getX(),
-//                this.phoneNumTitle.getY() + this.phoneNumTitle.getHeight(), 500, 500);
-//        this.add(this.phoneNumberTextField);
+        this.messageForUser = newLabel(" ", 200, 200, 500, 80);
+        this.add(this.messageForUser);
 
         this.background = new ImageIcon("background.png");
         this.setVisible(true);
     }
 
+
     private void enter() { //TODO action listener++++++++++++++++++++++++
         this.enterButton.addActionListener((event) -> {
 //            this.enterButton.setVisible(false);
-            repaint();
-            ChromeDriver web = new ChromeDriver();
-            web.get(WEB);
-            web.manage().window().maximize();
-//            List<WebElement> menu = web.findElements(By.className("f804f6gw n4o0o7gj"));
-            List<WebElement> menu = web.findElements(By.linkText("בארכיון"));
-            System.out.println(menu.size());
-            if (menu.size() > 0) {
-                System.out.println("find");
+            repaint(); //*****
+
+            if ((!(this.messageTextField.getText().equals(""))) && phoneNumber1(this.phoneNumberTextField.getText())) {
+                System.out.println("תקין");
+//                   ChromeDriver web = new ChromeDriver();
+//                   web.get(WEB);
+//                   web.manage().window().maximize();
+//                   List<WebElement> menu = web.findElements(By.linkText("בארכיון"));
+//                   System.out.println(menu.size());
+//                   if (menu.size() > 0) {
+//                       System.out.println("find");
 //                enterLabel();
 //                repaint();
-                this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
-                        ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-                this.add(successfullyEnterLabel);
-            }
+//                       this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
+//                               ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
+//                       this.add(successfullyEnterLabel);
+            } else if (this.messageForUser.getText().equals(""))
+                this.messageForUser.setText("יש להכניס הודעה");
         });
+    }
+
+    public boolean phoneNumber1(String phone) {
+        boolean validAreaCode = false;
+        boolean onlyNumbers = true;
+        String partOfnum = "";
+        try {
+            if (phone.length() != 0) {
+                if (phone.length() < 10 || phone.length() > 12) {
+                    if (phone.length() < 10)
+                        this.messageForUser.setText("אורך מספר הטלפון קצר");
+                    else
+                        this.messageForUser.setText("אורך מספר הטלפון ארוך");
+                } else {
+                    if (phone.substring(0, 2).equals("05") && phone.length() == 10) {
+                        validAreaCode = true;
+                        partOfnum = phone.substring(3);
+                    } else if (phone.substring(0, 3).equals("972") && phone.length() == 12) {
+                        validAreaCode = true;
+                        partOfnum = phone.substring(3);
+                    } else this.messageForUser.setText("לא תקין");
+                    System.out.println(partOfnum);
+                    for (int i = 0; i < partOfnum.length(); i++) {
+                        if (!Character.isDigit(partOfnum.charAt(i)))
+                            onlyNumbers = false;
+                    }
+                    if (!onlyNumbers)
+                        this.messageForUser.setText("יש להכניס רק ספרות");
+                }
+            } else
+                this.messageForUser.setText("יש להכניס מספר טלפון");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (validAreaCode && onlyNumbers)
+            return true;
+        else {
+            return false;
+        }
     }
 
     public JLabel newLabel(String text, int x, int y, int width, int height) {
@@ -113,64 +158,8 @@ public class WebWindow extends JPanel {
         return textField;
     }
 
-    public boolean phoneNumber1(String phone) {
-        boolean validPhoneNumber = false;
-        try {
-            if (phone.length() != 0) {
-                if (phone.length() < 10 || phone.length() > 12) {
-                    System.out.println("Invalid value");
-                } else {
-                    if (phone.substring(0, 2).equals("05") && phone.length() == 10) {
-                        validPhoneNumber = true;
-                    } else if (phone.substring(0, 3).equals("972") && phone.length() == 12)
-                        validPhoneNumber = true;
-                }
-            } else
-                System.out.println("יש להכניס מספר טלפון - לא תיבה ריקה");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return validPhoneNumber;
-    }
-
-    public boolean phoneNumber(String phoneNumber) {
-        int counterValidNumber = 0;
-        int counterAreaCodeNum = 0;
-        boolean validLength = false;
-        boolean validAreaCode = false;
-        boolean validPhoneNumber = false;
-        if (phoneNumber.length() != LENGTH_PHONE_NUMBER) {
-            System.out.println("Invalid value");
-        } else {
-            for (int i = 0; i < phoneNumber.length(); i++) {
-                if (Character.isDigit(phoneNumber.charAt(i)))
-                    counterValidNumber++;
-            }
-            if (counterValidNumber == LENGTH_PHONE_NUMBER)
-                validLength = true;
-            for (int i = 0; i < PHONE_START.length(); i++) {
-                if (phoneNumber.charAt(i) == PHONE_START.charAt(i))
-                    counterAreaCodeNum++;
-            }
-            if (counterAreaCodeNum == PHONE_START.length()) {
-                validAreaCode = true;
-            }
-            if (validLength && validAreaCode)
-                validPhoneNumber = true;
-            else System.out.println("Invalid value");
-        }
-        return validPhoneNumber;
-    }
-
-
     public void paintComponent(Graphics graphics) {
         graphics.drawImage(this.background.getImage(), 0, 0,
                 MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_HEIGHT, null);
     }
 }
-
-
-
-
-

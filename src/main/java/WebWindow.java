@@ -19,6 +19,10 @@ public class WebWindow extends JPanel {
     public static final String WEB = "https://web.whatsapp.com/";
 
     public static final int ENTER_BUTTON_X = 100, ENTER_BUTTON_Y = 700, ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
+    public static final int PHONE_NUM_TITLE_Y = 100, PHONE_NUM_TITLE_WIDTH = 400, PHONE_NUM_TITLE_HEIGHT = 100, PHONE_NUM_TITLE_MARGIN = 400;
+    public static final int PHONE_NUM_TEXT_Y = 200, PHONE_NUM_TEXT_WIDTH = 400, PHONE_NUM_TEXT_HEIGHT = 50, PHONE_NUM_TEXT_MARGIN = 525;
+
+
     public static final int ENTER_LABEL_Y = 0, ENTER_LABEL_WIDTH = 200, ENTER_LABEL_HEIGHT = 150;
     public static final int LENGTH_PHONE_NUMBER = 10;
     public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "972";
@@ -48,10 +52,9 @@ public class WebWindow extends JPanel {
         this.setBounds(x, y, width, height);
         this.setLayout(null);
 
-//        this.enterButton = new MyJButton("התחבר", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT).getButton();
-//        this.add(this.enterButton);
-//        enter();
-
+        this.enterButton = new MyJButton("התחבר", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT).getButton();
+        this.add(this.enterButton);
+        enter();
 //
         this.phoneNumTitle = newLabel("הכנס מספר פלאפון: ", MainWindow.WINDOW_WIDTH - GENERAL_WIDTH,
                 NUM_TITLE_Y, NUM_TITLE_WIDTH, GENERAL_HEIGHT);
@@ -85,15 +88,16 @@ public class WebWindow extends JPanel {
             ChromeDriver web = new ChromeDriver();
             web.get(WEB);
             web.manage().window().maximize();
-            List<WebElement> pic = web.findElements(By.className("web"));
-            if (pic.size() > 0) {
+         //   List<WebElement> menu = web.findElement(By.ByClassName("_1ADa8 _3Nsgw app-wrapper-web font-fix os-win"));
+           // System.out.println(menu.size());
+            //if (menu.size() > 0) {
                 System.out.println("find");
 //                enterLabel();
 //                repaint();
                 this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה", MainWindow.WINDOW_WIDTH - ENTER_LABEL_WIDTH,
                         ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
 
-            }
+           // }
         });
     }
 

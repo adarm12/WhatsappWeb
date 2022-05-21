@@ -38,17 +38,17 @@ public class WebWindow extends JPanel {
         this.setBounds(x, y, width, height);
         this.setLayout(null);
 
-        this.enterButton = new MyJButton("התחבר", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT).getButton();
-        this.add(this.enterButton);
-        enter();
-
+//        this.enterButton = new MyJButton("התחבר", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT).getButton();
+//        this.add(this.enterButton);
+//        enter();
+//
         this.phoneNumTitle = newLabel("הכנס מספר טלפון:", 800, 250, 250, 180);
         this.add(this.phoneNumTitle);
 //        this.phoneNumberTextField = newTextField(this.phoneNumTitle.getX(),
 //                this.phoneNumTitle.getY() + this.phoneNumTitle.getHeight(), 500, 500);
 //        this.add(this.phoneNumberTextField);
 
-        //      this.background = new ImageIcon("background.png");
+        this.background = new ImageIcon("background.png");
         this.setVisible(true);
     }
 
@@ -73,7 +73,7 @@ public class WebWindow extends JPanel {
 
     public JLabel newLabel(String text, int x, int y, int width, int height) {
         JLabel label = new JLabel(text);
-        this.setBounds(x, y, width, height);
+        label.setBounds(x, y, width, height);
         label.setFont(font);
         return label;
     }
@@ -136,8 +136,8 @@ public class WebWindow extends JPanel {
 
 
     public void paintComponent(Graphics graphics) {
-//        graphics.drawImage(this.background.getImage(), 0, 0,
-//                MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_HEIGHT, null);
+        graphics.drawImage(this.background.getImage(), 0, 0,
+                MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_HEIGHT, null);
     }
 }
 

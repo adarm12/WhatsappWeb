@@ -3,7 +3,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.tracing.opentelemetry.SeleniumSpanExporter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +16,10 @@ public class WebWindow extends JPanel {
     public static final String WEB = "https://web.whatsapp.com/";
 
     public static final int ENTER_BUTTON_X = 100, ENTER_BUTTON_Y = 700, ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
+    public static final int PHONE_NUM_TITLE_Y = 100, PHONE_NUM_TITLE_WIDTH = 400, PHONE_NUM_TITLE_HEIGHT = 100, PHONE_NUM_TITLE_MARGIN = 400;
+    public static final int PHONE_NUM_TEXT_Y = 200, PHONE_NUM_TEXT_WIDTH = 400, PHONE_NUM_TEXT_HEIGHT = 50, PHONE_NUM_TEXT_MARGIN = 525;
+
+
     public static final int ENTER_LABEL_Y = 0, ENTER_LABEL_WIDTH = 200, ENTER_LABEL_HEIGHT = 150;
     public static final int LENGTH_PHONE_NUMBER = 10;
     public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "972";
@@ -29,7 +32,6 @@ public class WebWindow extends JPanel {
     private JTextField phoneNumberTextField;
     private JLabel messageTitle;
     private JTextField messageTextField;
-
 
 
     public WebWindow(int x, int y, int width, int height) {
@@ -47,16 +49,17 @@ public class WebWindow extends JPanel {
 //        this.add(this.enterButton);
 //        enter();
 //
-        this.phoneNumTitle = newLabel("הכנס מספר פלאפון: ",MainWindow.WINDOW_WIDTH - 400,100,400,100);
+        this.phoneNumTitle = newLabel("הכנס מספר פלאפון: ", MainWindow.WINDOW_WIDTH - PHONE_NUM_TITLE_MARGIN, PHONE_NUM_TITLE_Y,
+                PHONE_NUM_TITLE_WIDTH, PHONE_NUM_TITLE_HEIGHT);
         this.add(phoneNumTitle);
-
-        this.phoneNumberTextField = newTextField(MainWindow.WINDOW_WIDTH - 525,200,400,50);
+        this.phoneNumberTextField = newTextField(this.phoneNumTitle.getX(), this.phoneNumTitle.getY() + this.phoneNumTitle.getHeight()
+                , PHONE_NUM_TEXT_WIDTH, PHONE_NUM_TEXT_HEIGHT);
         this.add(phoneNumberTextField);
 
-        this.messageTitle = newLabel("הכנס הודעה: ",MainWindow.WINDOW_WIDTH - 310,300,400,100);
+        this.messageTitle = newLabel("הכנס הודעה: ", MainWindow.WINDOW_WIDTH - 310, 300, 400, 100);
         this.add(messageTitle);
 
-        this.messageTextField = newTextField(MainWindow.WINDOW_WIDTH - 525,400,400,100);
+        this.messageTextField = newTextField(MainWindow.WINDOW_WIDTH - 525, 400, 400, 100);
         this.add(messageTextField);
 
 

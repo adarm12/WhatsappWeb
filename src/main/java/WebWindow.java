@@ -20,12 +20,17 @@ public class WebWindow extends JPanel {
     public static final int ENTER_LABEL_Y = 0, ENTER_LABEL_WIDTH = 200, ENTER_LABEL_HEIGHT = 150;
     public static final int LENGTH_PHONE_NUMBER = 10;
     public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "972";
+//    public static final int
 
     private ImageIcon background;
     private JButton enterButton;
     private JLabel successfullyEnterLabel;
     private JLabel phoneNumTitle;
     private JTextField phoneNumberTextField;
+    private JLabel messageTitle;
+    private JTextField messageTextField;
+
+
 
     public WebWindow(int x, int y, int width, int height) {
         System.setProperty("webdriver.chrome.driver", "C:\\1234\\driver.exe");
@@ -42,8 +47,19 @@ public class WebWindow extends JPanel {
 //        this.add(this.enterButton);
 //        enter();
 //
-        this.phoneNumTitle = newLabel("הכנס מספר טלפון:", 800, 250, 250, 180);
-        this.add(this.phoneNumTitle);
+        this.phoneNumTitle = newLabel("הכנס מספר פלאפון: ",MainWindow.WINDOW_WIDTH - 400,100,400,100);
+        this.add(phoneNumTitle);
+
+        this.phoneNumberTextField = newTextField(MainWindow.WINDOW_WIDTH - 525,200,400,50);
+        this.add(phoneNumberTextField);
+
+        this.messageTitle = newLabel("הכנס הודעה: ",MainWindow.WINDOW_WIDTH - 310,300,400,100);
+        this.add(messageTitle);
+
+        this.messageTextField = newTextField(MainWindow.WINDOW_WIDTH - 525,400,400,100);
+        this.add(messageTextField);
+
+
 //        this.phoneNumberTextField = newTextField(this.phoneNumTitle.getX(),
 //                this.phoneNumTitle.getY() + this.phoneNumTitle.getHeight(), 500, 500);
 //        this.add(this.phoneNumberTextField);

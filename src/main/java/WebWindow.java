@@ -19,17 +19,14 @@ public class WebWindow extends JPanel {
     public static final String WEB = "https://web.whatsapp.com/";
 
     public static final int ENTER_BUTTON_X = 100, ENTER_BUTTON_Y = 700, ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
-    public static final int PHONE_NUM_TITLE_Y = 100, PHONE_NUM_TITLE_WIDTH = 400, PHONE_NUM_TITLE_HEIGHT = 100, PHONE_NUM_TITLE_MARGIN = 400;
-    public static final int PHONE_NUM_TEXT_Y = 200, PHONE_NUM_TEXT_WIDTH = 400, PHONE_NUM_TEXT_HEIGHT = 50, PHONE_NUM_TEXT_MARGIN = 525;
-
-
-    public static final int ENTER_LABEL_Y = 0, ENTER_LABEL_WIDTH = 200, ENTER_LABEL_HEIGHT = 150;
+    public static final int GENERAL_WIDTH = 400, GENERAL_HEIGHT = 50;
+    public static final int PHONE_NUM_TITLE_Y = 100, PHONE_NUM_TITLE_WIDTH = 275;
+    public static final int MARGIN_BETWEEN = 100;
+    public static final int MESSAGE_TITLE_MARGIN = 310;
+    public static final int MESSAGE_TEXT_MARGIN_X = 210, MESSAGE_TEXT_WIDTH = 500, MESSAGE_TEXT_HEIGHT = 100;
+    public static final int ENTER_LABEL_X = 100,ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
     public static final int LENGTH_PHONE_NUMBER = 10;
     public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "972";
-    public static final int NUM_TITLE_Y = 100, NUM_TITLE_WIDTH = 275;
-    public static final int MESSAGE_LABEL_MARGIN = 310;
-    public static final int MESSAGE_TEXT_MARGIN_X = 610, MESSAGE_TEXT_MARGIN_Y = 100, MESSAGE_TEXT_HEIGHT = 100;
-    public static final int GENERAL_WIDTH = 400, GENERAL_HEIGHT = 50;
 
 
     private ImageIcon background;
@@ -42,10 +39,10 @@ public class WebWindow extends JPanel {
 
 
     public WebWindow(int x, int y, int width, int height) {
-        System.setProperty("webdriver.chrome.driver", "C:\\1234\\driver.exe");
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("user-data-air=C:\\Users\\shani\\AppData\\Local\\Temp\\scoped_dir4008_2001821348\\Default");
-//        System.setProperty("webdriver.chrome.driver", "C:\\Users\\adarm\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
+//        System.setProperty("webdriver.chrome.driver", "C:\\1234\\driver.exe");
+//        ChromeOptions chromeOptions = new ChromeOptions();
+//        chromeOptions.addArguments("user-data-air=C:\\Users\\shani\\AppData\\Local\\Temp\\scoped_dir4008_2001821348\\Default");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\adarm\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
 //        ChromeOptions chromeOptions = new ChromeOptions();
 //        chromeOptions.addArguments("user-data-dir=c:C:\\Users\\adarm\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\n");
 
@@ -57,19 +54,19 @@ public class WebWindow extends JPanel {
         enter();
 //
         this.phoneNumTitle = newLabel("הכנס מספר פלאפון: ", MainWindow.WINDOW_WIDTH - GENERAL_WIDTH,
-                NUM_TITLE_Y, NUM_TITLE_WIDTH, GENERAL_HEIGHT);
+                PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
         this.add(phoneNumTitle);
 
         this.phoneNumberTextField = newTextField(phoneNumTitle.getX() + phoneNumTitle.getWidth() - GENERAL_WIDTH,
                 phoneNumTitle.getY() + phoneNumTitle.getHeight(), GENERAL_WIDTH, GENERAL_HEIGHT);
         this.add(phoneNumberTextField);
 
-        this.messageTitle = newLabel("הכנס הודעה: ", MainWindow.WINDOW_WIDTH - MESSAGE_LABEL_MARGIN,
-                phoneNumberTextField.getY() + MESSAGE_TEXT_MARGIN_Y, GENERAL_WIDTH, GENERAL_HEIGHT);
+        this.messageTitle = newLabel("הכנס הודעה: ", MainWindow.WINDOW_WIDTH - MESSAGE_TITLE_MARGIN,
+                phoneNumberTextField.getY() + MARGIN_BETWEEN, GENERAL_WIDTH, GENERAL_HEIGHT);
         this.add(messageTitle);
 
-        this.messageTextField = newTextField(messageTitle.getX() + messageTitle.getWidth() - MESSAGE_TEXT_MARGIN_X,
-                messageTitle.getY() + messageTitle.getHeight(), GENERAL_WIDTH, MESSAGE_TEXT_HEIGHT);
+        this.messageTextField = newTextField(messageTitle.getX() + messageTitle.getWidth() - MESSAGE_TEXT_WIDTH - MESSAGE_TEXT_MARGIN_X,
+                messageTitle.getY() + messageTitle.getHeight(), MESSAGE_TEXT_WIDTH, MESSAGE_TEXT_HEIGHT);
         this.add(messageTextField);
 
 
@@ -83,21 +80,22 @@ public class WebWindow extends JPanel {
 
     private void enter() { //TODO action listener++++++++++++++++++++++++
         this.enterButton.addActionListener((event) -> {
-            this.enterButton.setVisible(false);
+//            this.enterButton.setVisible(false);
             repaint();
             ChromeDriver web = new ChromeDriver();
             web.get(WEB);
             web.manage().window().maximize();
-         //   List<WebElement> menu = web.findElement(By.ByClassName("_1ADa8 _3Nsgw app-wrapper-web font-fix os-win"));
-           // System.out.println(menu.size());
-            //if (menu.size() > 0) {
+//            List<WebElement> menu = web.findElements(By.className("f804f6gw n4o0o7gj"));
+            List<WebElement> menu = web.findElements(By.linkText("בארכיון"));
+            System.out.println(menu.size());
+            if (menu.size() > 0) {
                 System.out.println("find");
 //                enterLabel();
 //                repaint();
-                this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה", MainWindow.WINDOW_WIDTH - ENTER_LABEL_WIDTH,
-                        ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-
-           // }
+                this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
+                        ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
+                this.add(successfullyEnterLabel);
+            }
         });
     }
 

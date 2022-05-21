@@ -13,6 +13,7 @@ import java.util.List;
 public class WebWindow extends JPanel {
 
     Font font = new Font("Gisha", Font.BOLD, 30);
+    Font textFiledFont = new Font("Gisha", Font.BOLD, 24);
 
     public static final String WEB = "https://web.whatsapp.com/";
 
@@ -20,7 +21,11 @@ public class WebWindow extends JPanel {
     public static final int ENTER_LABEL_Y = 0, ENTER_LABEL_WIDTH = 200, ENTER_LABEL_HEIGHT = 150;
     public static final int LENGTH_PHONE_NUMBER = 10;
     public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "972";
-//    public static final int
+    public static final int NUM_TITLE_Y = 100, NUM_TITLE_WIDTH = 275;
+    public static final int MESSAGE_LABEL_MARGIN = 310;
+    public static final int MESSAGE_TEXT_MARGIN_X = 610, MESSAGE_TEXT_MARGIN_Y = 100, MESSAGE_TEXT_HEIGHT = 100;
+    public static final int GENERAL_WIDTH = 400, GENERAL_HEIGHT = 50;
+
 
     private ImageIcon background;
     private JButton enterButton;
@@ -29,7 +34,6 @@ public class WebWindow extends JPanel {
     private JTextField phoneNumberTextField;
     private JLabel messageTitle;
     private JTextField messageTextField;
-
 
 
     public WebWindow(int x, int y, int width, int height) {
@@ -47,16 +51,20 @@ public class WebWindow extends JPanel {
 //        this.add(this.enterButton);
 //        enter();
 //
-        this.phoneNumTitle = newLabel("הכנס מספר פלאפון: ",MainWindow.WINDOW_WIDTH - 400,100,400,100);
+        this.phoneNumTitle = newLabel("הכנס מספר פלאפון: ", MainWindow.WINDOW_WIDTH - GENERAL_WIDTH,
+                NUM_TITLE_Y, NUM_TITLE_WIDTH, GENERAL_HEIGHT);
         this.add(phoneNumTitle);
 
-        this.phoneNumberTextField = newTextField(MainWindow.WINDOW_WIDTH - 525,200,400,50);
+        this.phoneNumberTextField = newTextField(phoneNumTitle.getX() + phoneNumTitle.getWidth() - GENERAL_WIDTH,
+                phoneNumTitle.getY() + phoneNumTitle.getHeight(), GENERAL_WIDTH, GENERAL_HEIGHT);
         this.add(phoneNumberTextField);
 
-        this.messageTitle = newLabel("הכנס הודעה: ",MainWindow.WINDOW_WIDTH - 310,300,400,100);
+        this.messageTitle = newLabel("הכנס הודעה: ", MainWindow.WINDOW_WIDTH - MESSAGE_LABEL_MARGIN,
+                phoneNumberTextField.getY() + MESSAGE_TEXT_MARGIN_Y, GENERAL_WIDTH, GENERAL_HEIGHT);
         this.add(messageTitle);
 
-        this.messageTextField = newTextField(MainWindow.WINDOW_WIDTH - 525,400,400,100);
+        this.messageTextField = newTextField(messageTitle.getX() + messageTitle.getWidth() - MESSAGE_TEXT_MARGIN_X,
+                messageTitle.getY() + messageTitle.getHeight(), GENERAL_WIDTH, MESSAGE_TEXT_HEIGHT);
         this.add(messageTextField);
 
 
@@ -97,6 +105,7 @@ public class WebWindow extends JPanel {
     public JTextField newTextField(int x, int y, int width, int height) {
         JTextField textField = new JTextField();
         textField.setBounds(x, y, width, height);
+        textField.setFont(textFiledFont);
         return textField;
     }
 

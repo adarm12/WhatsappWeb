@@ -83,24 +83,27 @@ public class WebWindow extends JPanel {
 
     private void enter() { //TODO action listener++++++++++++++++++++++++
         this.enterButton.addActionListener((event) -> {
-//            this.enterButton.setVisible(false);
+            this.enterButton.setVisible(false);
             repaint(); //*****
 
             if ((!(this.messageTextField.getText().equals(""))) && phoneNumber1(this.phoneNumberTextField.getText())) {
                 System.out.println("תקין");
-//                   ChromeDriver web = new ChromeDriver();
-//                   web.get(WEB);
-//                   web.manage().window().maximize();
-//                   List<WebElement> menu = web.findElements(By.linkText("בארכיון"));
-//                   System.out.println(menu.size());
-//                   if (menu.size() > 0) {
-//                       System.out.println("find");
+            }
+            ChromeDriver web = new ChromeDriver();
+            web.get(WEB);
+            web.manage().window().maximize();
+            List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
+//            List<WebElement> menu = web.findElements(By.linkText("f804f6gw n4o0o7gj"));
+            System.out.println(menu.size());
+            do {
+                System.out.println("find");
 //                enterLabel();
-//                repaint();
-//                       this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
-//                               ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-//                       this.add(successfullyEnterLabel);
-            } else if (this.messageForUser.getText().equals(""))
+                repaint();
+                this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
+                        ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
+                this.add(successfullyEnterLabel);
+            } while (menu.get(0).isDisplayed());
+            if (this.messageForUser.getText().equals(""))
                 this.messageForUser.setText("יש להכניס הודעה");
         });
     }

@@ -51,6 +51,7 @@ public class WebWindow extends JPanel {
 //        this.enterButton = new MyJButton("התחבר", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT).getButton();
 //        this.add(this.enterButton);
 //        enter();
+
 //
         this.phoneNumTitle = newLabel("הכנס מספר פלאפון: ", MainWindow.WINDOW_WIDTH - GENERAL_WIDTH,
                 NUM_TITLE_Y, NUM_TITLE_WIDTH, GENERAL_HEIGHT);

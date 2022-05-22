@@ -87,22 +87,22 @@ public class WebWindow extends JPanel {
             repaint(); //*****
 
             if ((!(this.messageTextField.getText().equals(""))) && phoneNumber1(this.phoneNumberTextField.getText())) {
-                System.out.println("תקין");
-            }
-            ChromeDriver web = new ChromeDriver();
-            web.get(WEB);
-            web.manage().window().maximize();
-            List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
+                this.messageForUser.setText("תקין");
+                ChromeDriver web = new ChromeDriver();
+                web.get(WEB);
+                web.manage().window().maximize();
+                List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
 //            List<WebElement> menu = web.findElements(By.linkText("f804f6gw n4o0o7gj"));
-            System.out.println(menu.size());
-            do {
-                System.out.println("find");
+                System.out.println(menu.size());
+                do {
+                    System.out.println("find");
 //                enterLabel();
-                repaint();
-                this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
-                        ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-                this.add(successfullyEnterLabel);
-            } while (menu.get(0).isDisplayed());
+                    repaint();
+                    this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
+                            ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
+                    this.add(successfullyEnterLabel);
+                } while (menu.get(0).isDisplayed());
+            }
             if (this.messageForUser.getText().equals(""))
                 this.messageForUser.setText("יש להכניס הודעה");
         });

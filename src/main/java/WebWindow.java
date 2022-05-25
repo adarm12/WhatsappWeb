@@ -43,10 +43,10 @@ public class WebWindow extends JPanel {
 
 
     public WebWindow(int x, int y, int width, int height) {
-//        System.setProperty("webdriver.chrome.driver", "C:\\1234\\driver.exe");
-//        ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments("user-data-air=C:\\Users\\shani\\AppData\\Local\\Temp\\scoped_dir4008_2001821348\\Default");
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\adarm\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\1234\\driver.exe");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("user-data-air=C:\\Users\\shani\\AppData\\Local\\Temp\\scoped_dir4008_2001821348\\Default");
+//        System.setProperty("webdriver.chrome.driver", "C:\\Users\\adarm\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
 //        ChromeOptions chromeOptions = new ChromeOptions();
 //        chromeOptions.addArguments("user-data-dir=c:C:\\Users\\adarm\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\n");
 
@@ -83,9 +83,7 @@ public class WebWindow extends JPanel {
 
     private void enter() { //TODO action listener++++++++++++++++++++++++
         this.enterButton.addActionListener((event) -> {
-            this.enterButton.setVisible(false);
             repaint(); //*****
-
             if ((!(this.messageTextField.getText().equals(""))) && phoneNumber1(this.phoneNumberTextField.getText())) {
                 this.messageForUser.setText("תקין");
                 ChromeDriver web = new ChromeDriver();
@@ -102,6 +100,7 @@ public class WebWindow extends JPanel {
                             ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
                     this.add(successfullyEnterLabel);
                 } while (menu.get(0).isDisplayed());
+                this.enterButton.setVisible(false);
             }
             if (this.messageForUser.getText().equals(""))
                 this.messageForUser.setText("יש להכניס הודעה");

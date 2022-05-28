@@ -22,6 +22,8 @@ public class WebWindow extends JPanel {
     public static final int MESSAGE_TITLE_MARGIN = 310;
     public static final int MESSAGE_TEXT_MARGIN_X = 210, MESSAGE_TEXT_WIDTH = 500, MESSAGE_TEXT_HEIGHT = 100;
     public static final int ENTER_LABEL_X = 100, ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
+    public static final int LENGTH_PHONE_NUMBER = 10;
+    public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "972";
 
 
     private ImageIcon background;
@@ -77,18 +79,28 @@ public class WebWindow extends JPanel {
             else if (this.messageTextField.getText().equals(""))
                 this.messageForUser.setText("יש להכניס הודעה");
             if (PhoneNumber.isValidPhoneNumber(phone) && (!this.messageTextField.getText().equals(""))) {
-                    this.messageForUser.setText("תקין");
+                this.messageForUser.setText("תקין");
                 ChromeDriver web = new ChromeDriver();
                 web.get(CONTACT + PhoneNumber.formatPhoneNumber(phone));
                 web.manage().window().maximize();
                 List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
-                System.out.println(menu.size());
-                do {
-                    this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
-                            ENTER_LABEL_X, 500, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-                    this.add(successfullyEnterLabel);
-                    this.enterButton.setVisible(false);
-                } while (menu.get(0).isDisplayed());
+                System.out.println("menu" + menu.size());
+//                System.out.println(menu.get(0).isDisplayed());
+                if (menu.size() != 0) {
+                    System.out.println("good");
+                        this.successfullyEnterLabel = newLabel("מתחבר...",
+                                ENTER_LABEL_X, 500, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
+                }
+                this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
+                this.add(successfullyEnterLabel);
+                this.enterButton.setVisible(false);
+
+//                List<WebElement> userMessageInput = web.findElements(By.cssSelector("_13NKt copyable-text selectable-text"));
+//                System.out.println(userMessageInput.size());
+
+//                    List<WebElement> userMessageInput = web.findElements(By.cssSelector("הקלדת ההודעה"));
+//                    System.out.println(userMessageInput.size());
+//                    userMessageInput.get(0).sendKeys("this.messageTextField.getText()");
             }
         });
     }

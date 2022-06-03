@@ -30,6 +30,7 @@ public class PhoneNumber {
         return isValid;
     }
 
+
     public static String formatPhoneNumber(String phoneNum) {
         String format = "";
         if (isOnlyNumbers(phoneNum))

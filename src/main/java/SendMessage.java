@@ -9,7 +9,6 @@ public class SendMessage extends JPanel {
         this.setBounds(x, y, width, height);
         this.setLayout(null);
 
-
         System.out.println("hi");
 
 

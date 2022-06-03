@@ -61,6 +61,7 @@ public class WebWindow extends JPanel {
         this.messageForUser = newLabel("", 200, 200, 500, 80);
         this.add(this.messageForUser);
 
+
         this.background = new ImageIcon("background.png");
         this.setVisible(true);
     }

@@ -34,6 +34,8 @@ public class WebWindow extends JPanel {
     private JLabel messageTitle;
     private JTextField messageTextField;
     private JLabel messageForUser;
+    private WebElement connect;
+    private boolean isConnect;
 
 
     public WebWindow(int x, int y, int width, int height) {
@@ -87,35 +89,22 @@ public class WebWindow extends JPanel {
                 web.get(CONTACT + PhoneNumber.formatPhoneNumber(phone));
                 web.manage().window().maximize();
 
-                List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
-                System.out.println("menu" + menu.size());
-                System.out.println(menu.get(0).isDisplayed());
+//                List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
+//                System.out.println("menu" + menu.size());
+//                System.out.println(menu.get(0).isDisplayed());
+                connection(web);
 
-                do {
-                    SendMessage sendMessage = new SendMessage(MainWindow.WINDOW_X, MainWindow.WINDOW_Y,
-                            MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_WIDTH, this.messageTextField.getText(), web);
-                    this.add(sendMessage);
-                    this.setVisible(false);
-                } while (!menu.get(0).isDisplayed());
 
-                // List<WebElement> userMessageInput = web.findElements(By.className("web"));
-//                System.out.println("user" + userMessageInput.size());
-//
-//                WebElement m  = userMessageInput.get(0).findElement(By.id("app"));
-//                List<WebElement> text = web.findElements(By.className("_2cYbV"));
-//                System.out.println("text " + text.size());
+//                while (menu.size() != 1) {
+//                    System.out.println("good");
+//                        this.successfullyEnterLabel = newLabel("מתחבר...",
+//                                ENTER_LABEL_X, 500, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
+//                }
 
-                //   WebElement sendClick = web.findElement(By.className("tvf2evcx oq44ahr5 lb5m6g5c svlsagor p2rjqpw5 epia9gcq"));
-                // userMessageInput.get(0).sendKeys("this.messageTextField.getText()");
+                this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
+                this.add(successfullyEnterLabel);
+                this.enterButton.setVisible(false);
 
-//                do {
-//                    this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
-//                            ENTER_LABEL_X, 500, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-//                    this.add(successfullyEnterLabel);
-//                    this.enterButton.setVisible(false);
-//
-//
-//                } while (menu.get(0).isDisplayed());
             }
         });
     }
@@ -139,4 +128,44 @@ public class WebWindow extends JPanel {
         graphics.drawImage(this.background.getImage(), 0, 0,
                 MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_HEIGHT, null);
     }
+
+    public ChromeDriver connection(ChromeDriver driver) {
+        this.connect = null;
+        new Thread(() -> {
+            try {
+                System.out.println("try");
+                this.connect = driver.findElement(By.id("side"));
+                if (this.connect != null) {
+                    System.out.println("found");
+                    this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
+                    this.add(successfullyEnterLabel);
+                    this.enterButton.setVisible(false);
+                }
+
+            } catch (Exception e) {
+                connection(driver);
+            }
+        }).start();
+        return driver;
+
+    }
 }
+
+
+//    public ChromeDriver connect(ChromeDriver driver) {
+//        new Thread(() -> {
+//            try {
+//                WebElement menu = driver.findElement(By.id("side"));
+//                if (menu != null) {
+//                    this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
+//                    this.add(successfullyEnterLabel);
+//                    this.enterButton.setVisible(false);
+//                }
+//            } catch (
+//                    Exception e) {
+//                connect(driver);
+//            }
+//        }).start();
+//        return driver;
+//    }
+//}

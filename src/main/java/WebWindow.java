@@ -13,15 +13,20 @@ public class WebWindow extends JPanel {
 
     public static final String CONTACT = "https://api.whatsapp.com/send?phone=";
 
+    public static final int TITLE_Y = 50, TITLE_WIDTH = 900 , TITLE_HEIGHT = 100;
+    public static final int TITLE_ICON_X = 1000,TITLE_ICON_Y = 50;
+
     public static final int ENTER_BUTTON_X = 100, ENTER_BUTTON_Y = 700, ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
     public static final int GENERAL_WIDTH = 400, GENERAL_HEIGHT = 50;
-    public static final int PHONE_NUM_TITLE_Y = 100, PHONE_NUM_TITLE_WIDTH = 275;
+    public static final int PHONE_NUM_TITLE_Y = 250, PHONE_NUM_TITLE_WIDTH = 275;
     public static final int MARGIN_BETWEEN = 100;
     public static final int MESSAGE_TITLE_MARGIN = 310;
     public static final int MESSAGE_TEXT_MARGIN_X = 210, MESSAGE_TEXT_WIDTH = 500, MESSAGE_TEXT_HEIGHT = 100;
     public static final int ENTER_LABEL_X = 100, ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
     public static final String SUCCESSFULLY_MESSAGE = "התתחברות בוצעה בהצלחה!";
 
+    private JLabel title;
+    private ImageIcon titleIcon;
     private ImageIcon background;
     private JButton enterButton;
     private JLabel successfullyEnterLabel;
@@ -39,20 +44,29 @@ public class WebWindow extends JPanel {
         this.setBounds(x, y, width, height);
         this.setLayout(null);
 
+        this.title = CreateNew.newLabel("WhatsApp Web",width / 2 - TITLE_WIDTH / 2,TITLE_Y, TITLE_WIDTH,TITLE_HEIGHT);
+        this.title.setForeground(Color.WHITE);
+        this.title.setFont(new Font("Gisha", Font.BOLD, 100));
+        this.add(this.title);
+
+        this.titleIcon = new ImageIcon("WhatsApp Icon.jpg");
+
         this.enterButton = CreateNew.newButton("התחבר", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT);
         this.add(this.enterButton);
         enter();
 
-        this.phoneNumTitle = CreateNew.newLabel("הכנס מספר פלאפון: ", MainWindow.WINDOW_WIDTH - GENERAL_WIDTH,
+        this.phoneNumTitle = CreateNew.newLabel("הכנס מספר פלאפון: ",width - GENERAL_WIDTH,
                 PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
+        this.phoneNumTitle.setForeground(Color.WHITE);
         this.add(phoneNumTitle);
 
         this.phoneNumberTextField = CreateNew.newTextField(phoneNumTitle.getX() + phoneNumTitle.getWidth() - GENERAL_WIDTH,
                 phoneNumTitle.getY() + phoneNumTitle.getHeight(), GENERAL_WIDTH, GENERAL_HEIGHT);
         this.add(phoneNumberTextField);
 
-        this.messageTitle = CreateNew.newLabel("הכנס הודעה: ", MainWindow.WINDOW_WIDTH - MESSAGE_TITLE_MARGIN,
+        this.messageTitle = CreateNew.newLabel("הכנס הודעה: ", width - MESSAGE_TITLE_MARGIN,
                 phoneNumberTextField.getY() + MARGIN_BETWEEN, GENERAL_WIDTH, GENERAL_HEIGHT);
+        this.messageTitle.setForeground(Color.WHITE);
         this.add(messageTitle);
 
         this.messageTextField = CreateNew.newTextField(messageTitle.getX() + messageTitle.getWidth() - MESSAGE_TEXT_WIDTH - MESSAGE_TEXT_MARGIN_X,
@@ -67,7 +81,7 @@ public class WebWindow extends JPanel {
 
 
         this.connect = null;
-        this.background = new ImageIcon("background.png");
+        this.background = new ImageIcon("web.jpg");
         this.setVisible(true);
     }
 
@@ -130,6 +144,8 @@ public class WebWindow extends JPanel {
     public void paintComponent(Graphics graphics) {
         graphics.drawImage(this.background.getImage(), 0, 0,
                 MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_HEIGHT, null);
+        graphics.drawImage(this.titleIcon.getImage(), TITLE_ICON_X, TITLE_ICON_Y,
+                TITLE_HEIGHT, TITLE_HEIGHT, null);
     }
 
 

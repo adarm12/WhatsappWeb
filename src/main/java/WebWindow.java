@@ -106,22 +106,6 @@ public class WebWindow extends JPanel {
                 connection(web);
 
 
-//                List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
-//                System.out.println("menu" + menu.size());
-//                System.out.println(menu.get(0).isDisplayed());
-//                connection(web);
-
-
-//                while (menu.size() != 1) {
-//                    System.out.println("good");
-//                        this.successfullyEnterLabel = newLabel("מתחבר...",
-//                                ENTER_LABEL_X, 500, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-//                }
-
-//                this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
-//                this.add(successfullyEnterLabel);
-//                this.enterButton.setVisible(false);
-
             }
         });
     }
@@ -155,7 +139,6 @@ public class WebWindow extends JPanel {
                 if (this.connect != null) {
                     System.out.println("found");
                     this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
-//                    this.add(successfullyEnterLabel);
                     this.enterButton.setVisible(false);
                 }
 
@@ -164,25 +147,9 @@ public class WebWindow extends JPanel {
             }
         }).start();
         return driver;
-
     }
+
+
+
 }
 
-
-//    public ChromeDriver connect(ChromeDriver driver) {
-//        new Thread(() -> {
-//            try {
-//                WebElement menu = driver.findElement(By.id("side"));
-//                if (menu != null) {
-//                    this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
-//                    this.add(successfullyEnterLabel);
-//                    this.enterButton.setVisible(false);
-//                }
-//            } catch (
-//                    Exception e) {
-//                connect(driver);
-//            }
-//        }).start();
-//        return driver;
-//    }
-//}

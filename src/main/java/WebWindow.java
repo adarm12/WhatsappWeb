@@ -77,6 +77,7 @@ public class WebWindow extends JPanel {
         this.add(this.messageForUser);
 
         this.successfullyEnterLabel = CreateNew.newLabel("", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT);
+        this.successfullyEnterLabel.setForeground(Color.WHITE);
         this.add(successfullyEnterLabel);
 
 

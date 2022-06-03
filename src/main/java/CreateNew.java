@@ -28,12 +28,6 @@ public class CreateNew extends JComboBox {
         return button;
     }
 
-    public static JComboBox newComboBox(String[] options, int x, int y, int width, int height) {
-        JComboBox comboBox = new JComboBox(options);
-        comboBox.setBounds(x, y, width, +height);
-        comboBox.setFont(myFont);
-        return comboBox;
-    }
 }
 
 

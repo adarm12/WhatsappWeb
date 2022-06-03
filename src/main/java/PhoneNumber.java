@@ -1,6 +1,6 @@
 public class PhoneNumber {
 
-    public static final int MIN_LENGTH_PHONE_NUMBER = 10, MAX_LENGTH_PHONE_NUMBER = 12;
+    public static final int MAX_LENGTH_PHONE_NUMBER = 12;
     public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "9725";
 
     private String phoneNum;
@@ -38,7 +38,7 @@ public class PhoneNumber {
                 format = phoneNum;
             else {
                 if (isValidAreaCode(phoneNum, PHONE_START))
-                    format = "9725" + phoneNum.substring(PHONE_START.length());
+                    format = ISRAELI_AREA_CODE + phoneNum.substring(PHONE_START.length());
             }
         return format;
     }

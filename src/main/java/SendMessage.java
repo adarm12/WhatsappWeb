@@ -1,23 +1,36 @@
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import javax.swing.*;
+import java.util.List;
 
-public class SendMessage extends JPanel {
+public class SendMessage {
 
+    private String messageToSend; // הודעה שנשלחת
+    private String messageAccepted; // הודעה שהתתקבלה
 
-    public SendMessage(int x, int y, int width, int height, String message, ChromeDriver web) {
-        this.setBounds(x, y, width, height);
-        this.setLayout(null);
+    public SendMessage(String message, ChromeDriver web) {
 
+        this.messageToSend = message;
 
         System.out.println("hi");
+        sendMessage(web);
 
-
-        this.setVisible(true);
     }
 
-    public void sendMessage(ChromeDriver driver, String messageToSend){
+    public void sendMessage(ChromeDriver web) {
 
+        List<WebElement> chatWindow = web.findElements(By.className("_6h3Ps"));
+        System.out.println("mess/" + chatWindow.size());
+
+        List<WebElement> messageField = chatWindow.get(0).findElements(By.className("_1UWac _1LbR4"));
+        System.out.println("clicl" + messageField.size());
+
+        messageField.get(0).click();
+        messageField.get(0).sendKeys(this.messageToSend);
+        System.out.println("send");
 
 
     }

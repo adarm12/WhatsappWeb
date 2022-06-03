@@ -1,4 +1,5 @@
 
+import com.sun.prism.paint.Stop;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,8 +11,6 @@ import java.util.List;
 
 public class WebWindow extends JPanel {
 
-//    Font font = new Font("Gisha", Font.BOLD, 30);
-  //  Font textFiledFont = new Font("Gisha", Font.BOLD, 24);
     public static final String CONTACT = "https://api.whatsapp.com/send?phone=";
 
     public static final int ENTER_BUTTON_X = 100, ENTER_BUTTON_Y = 700, ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
@@ -21,9 +20,7 @@ public class WebWindow extends JPanel {
     public static final int MESSAGE_TITLE_MARGIN = 310;
     public static final int MESSAGE_TEXT_MARGIN_X = 210, MESSAGE_TEXT_WIDTH = 500, MESSAGE_TEXT_HEIGHT = 100;
     public static final int ENTER_LABEL_X = 100, ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
-    public static final int LENGTH_PHONE_NUMBER = 10;
-    public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "972";
-
+    public static final String SUCCESSFULLY_MESSAGE = "התתחברות בוצעה בהצלחה!";
 
     private ImageIcon background;
     private JButton enterButton;
@@ -34,7 +31,7 @@ public class WebWindow extends JPanel {
     private JTextField messageTextField;
     private JLabel messageForUser;
 
-
+    private ChromeDriver web;
     private WebElement connect;
 
 
@@ -68,6 +65,8 @@ public class WebWindow extends JPanel {
         this.successfullyEnterLabel = CreateNew.newLabel("", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT);
         this.add(successfullyEnterLabel);
 
+
+        this.connect = null;
         this.background = new ImageIcon("background.png");
         this.setVisible(true);
     }
@@ -87,9 +86,40 @@ public class WebWindow extends JPanel {
             if (PhoneNumber.isValidPhoneNumber(phone) && (!this.messageTextField.getText().equals(""))) {
                 this.messageForUser.setText("תקין");
 
-                ChromeDriver web = new ChromeDriver();
-                web.get(CONTACT + PhoneNumber.formatPhoneNumber(phone));
+                this.web = new ChromeDriver();
+                this.web.get(CONTACT + PhoneNumber.formatPhoneNumber(phone));
                 web.manage().window().maximize();
+
+                WebElement chet = this.web.findElement(By.id("action-button"));
+                chet.click();
+
+                WebElement linkId = this.web.findElement(By.id("fallback_block"));
+                List<WebElement> linkElement = linkId.findElements(By.tagName("a"));
+                String chatLink = linkElement.get(1).getAttribute("href");
+
+                this.web.get(chatLink);
+                connection();
+
+            }
+        });
+    }
+
+    public ChromeDriver connection() {
+        new Thread(() -> {
+            try {
+                this.connect = this.web.findElement(By.id("side"));
+                if (this.connect != null) {
+                    System.out.println("found");
+                    this.successfullyEnterLabel.setText(SUCCESSFULLY_MESSAGE);
+                    this.enterButton.setVisible(false);
+                }
+            } catch (Exception e) {
+                connection();
+            }
+        }).start();
+        SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
+        return this.web;
+    }
 
 //                if (messageClass.contains("message-in")){
 //                    WebElement comment=this.lastMessage.findElement(By.cssSelector("span[dir='rtl']"));
@@ -97,52 +127,10 @@ public class WebWindow extends JPanel {
 //                    System.out.println(this.comment);
 //                    break;
 
-                WebElement chet = web.findElement(By.id("action-button"));
-                chet.click();
-
-                WebElement linkId = web.findElement(By.id("fallback_block"));
-                List<WebElement> linkElement = linkId.findElements(By.tagName("a"));
-                String chatLink = linkElement.get(1).getAttribute("href");
-                web.get(chatLink);
-                connection(web);
-
-
-            }
-        });
-    }
-
-
-    public JTextField newTextField(int x, int y, int width, int height) {
-        JTextField textField = new JTextField();
-        textField.setBounds(x, y, width, height);
-       // textField.setFont(textFiledFont);
-        return textField;
-    }
-
     public void paintComponent(Graphics graphics) {
         graphics.drawImage(this.background.getImage(), 0, 0,
                 MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_HEIGHT, null);
     }
-
-    public ChromeDriver connection(ChromeDriver driver) {
-        this.connect = null;
-        new Thread(() -> {
-            try {
-                System.out.println("try");
-                this.connect = driver.findElement(By.id("side"));
-                if (this.connect != null) {
-                    System.out.println("found");
-                    this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
-                    this.enterButton.setVisible(false);
-                }
-
-            } catch (Exception e) {
-                connection(driver);
-            }
-        }).start();
-        return driver;
-    }
-
 
 
 }

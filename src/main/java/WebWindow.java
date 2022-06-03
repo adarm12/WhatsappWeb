@@ -78,29 +78,43 @@ public class WebWindow extends JPanel {
                 this.messageForUser.setText("יש להכניס מספר תקין.");
             else if (this.messageTextField.getText().equals(""))
                 this.messageForUser.setText("יש להכניס הודעה");
+
             if (PhoneNumber.isValidPhoneNumber(phone) && (!this.messageTextField.getText().equals(""))) {
                 this.messageForUser.setText("תקין");
+
                 ChromeDriver web = new ChromeDriver();
                 web.get(CONTACT + PhoneNumber.formatPhoneNumber(phone));
                 web.manage().window().maximize();
+
                 List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
                 System.out.println("menu" + menu.size());
-//                System.out.println(menu.get(0).isDisplayed());
-                if (menu.size() != 0) {
-                    System.out.println("good");
-                        this.successfullyEnterLabel = newLabel("מתחבר...",
-                                ENTER_LABEL_X, 500, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-                }
-                this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
-                this.add(successfullyEnterLabel);
-                this.enterButton.setVisible(false);
+                System.out.println(menu.get(0).isDisplayed());
 
-//                List<WebElement> userMessageInput = web.findElements(By.cssSelector("_13NKt copyable-text selectable-text"));
-//                System.out.println(userMessageInput.size());
+                do {
+                    SendMessage sendMessage = new SendMessage(MainWindow.WINDOW_X, MainWindow.WINDOW_Y,
+                            MainWindow.WINDOW_WIDTH, MainWindow.WINDOW_WIDTH, this.messageTextField.getText(), web);
+                    this.add(sendMessage);
+                    this.setVisible(false);
+                } while (!menu.get(0).isDisplayed());
 
-//                    List<WebElement> userMessageInput = web.findElements(By.cssSelector("הקלדת ההודעה"));
-//                    System.out.println(userMessageInput.size());
-//                    userMessageInput.get(0).sendKeys("this.messageTextField.getText()");
+                // List<WebElement> userMessageInput = web.findElements(By.className("web"));
+//                System.out.println("user" + userMessageInput.size());
+//
+//                WebElement m  = userMessageInput.get(0).findElement(By.id("app"));
+//                List<WebElement> text = web.findElements(By.className("_2cYbV"));
+//                System.out.println("text " + text.size());
+
+                //   WebElement sendClick = web.findElement(By.className("tvf2evcx oq44ahr5 lb5m6g5c svlsagor p2rjqpw5 epia9gcq"));
+                // userMessageInput.get(0).sendKeys("this.messageTextField.getText()");
+
+//                do {
+//                    this.successfullyEnterLabel = newLabel("התתחברות בוצעה בהצלחה!",
+//                            ENTER_LABEL_X, 500, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
+//                    this.add(successfullyEnterLabel);
+//                    this.enterButton.setVisible(false);
+//
+//
+//                } while (menu.get(0).isDisplayed());
             }
         });
     }

@@ -7,7 +7,6 @@ public class MainWindow extends JFrame {
 
     public static final int WINDOW_X = 0, WINDOW_Y = 0, WINDOW_HEIGHT = 955, WINDOW_WIDTH = 1400;
 
-
     public MainWindow() {
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setResizable(false);

@@ -45,7 +45,6 @@ public class WebWindow extends JPanel {
         this.setLayout(null);
 
         this.title = CreateNew.newLabel("WhatsApp Web",width / 2 - TITLE_WIDTH / 2,TITLE_Y, TITLE_WIDTH,TITLE_HEIGHT);
-        this.title.setForeground(Color.WHITE);
         this.title.setFont(new Font("Gisha", Font.BOLD, 100));
         this.add(this.title);
 
@@ -57,7 +56,6 @@ public class WebWindow extends JPanel {
 
         this.phoneNumTitle = CreateNew.newLabel("הכנס מספר פלאפון: ",width - GENERAL_WIDTH,
                 PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
-        this.phoneNumTitle.setForeground(Color.WHITE);
         this.add(phoneNumTitle);
 
         this.phoneNumberTextField = CreateNew.newTextField(phoneNumTitle.getX() + phoneNumTitle.getWidth() - GENERAL_WIDTH,
@@ -76,8 +74,7 @@ public class WebWindow extends JPanel {
         this.messageForUser = CreateNew.newLabel("", 200, 200, 500, 80);
         this.add(this.messageForUser);
 
-        this.successfullyEnterLabel = CreateNew.newLabel("", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT);
-        this.successfullyEnterLabel.setForeground(Color.WHITE);
+        this.successfullyEnterLabel = CreateNew.newLabel("", ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
         this.add(successfullyEnterLabel);
 
 

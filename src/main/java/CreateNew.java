@@ -8,6 +8,7 @@ public class CreateNew extends JComboBox {
     public static JLabel newLabel(String text, int x, int y, int width, int height) {
         JLabel label = new JLabel(text);
         label.setBounds(x, y, width, height);
+        label.setForeground(Color.WHITE);
         label.setFont(myFont);
         return label;
     }

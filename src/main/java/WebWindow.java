@@ -10,9 +10,8 @@ import java.util.List;
 
 public class WebWindow extends JPanel {
 
-    Font font = new Font("Gisha", Font.BOLD, 30);
-    Font textFiledFont = new Font("Gisha", Font.BOLD, 24);
-    //    public static final String CONTACT = "https://web.whatsapp.com/send?phone=";
+//    Font font = new Font("Gisha", Font.BOLD, 30);
+  //  Font textFiledFont = new Font("Gisha", Font.BOLD, 24);
     public static final String CONTACT = "https://api.whatsapp.com/send?phone=";
 
     public static final int ENTER_BUTTON_X = 100, ENTER_BUTTON_Y = 700, ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
@@ -34,8 +33,9 @@ public class WebWindow extends JPanel {
     private JLabel messageTitle;
     private JTextField messageTextField;
     private JLabel messageForUser;
+
+
     private WebElement connect;
-    private boolean isConnect;
 
 
     public WebWindow(int x, int y, int width, int height) {
@@ -62,7 +62,7 @@ public class WebWindow extends JPanel {
                 messageTitle.getY() + messageTitle.getHeight(), MESSAGE_TEXT_WIDTH, MESSAGE_TEXT_HEIGHT);
         this.add(messageTextField);
 
-        this.messageForUser = newLabel("", 200, 200, 500, 80);
+        this.messageForUser = CreateNew.newLabel("", 200, 200, 500, 80);
         this.add(this.messageForUser);
 
         this.successfullyEnterLabel = CreateNew.newLabel("", ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT);
@@ -99,6 +99,7 @@ public class WebWindow extends JPanel {
 
                 WebElement chet = web.findElement(By.id("action-button"));
                 chet.click();
+
                 WebElement linkId = web.findElement(By.id("fallback_block"));
                 List<WebElement> linkElement = linkId.findElements(By.tagName("a"));
                 String chatLink = linkElement.get(1).getAttribute("href");
@@ -111,17 +112,10 @@ public class WebWindow extends JPanel {
     }
 
 
-    public JLabel newLabel(String text, int x, int y, int width, int height) {
-        JLabel label = new JLabel(text);
-        label.setBounds(x, y, width, height);
-        label.setFont(font);
-        return label;
-    }
-
     public JTextField newTextField(int x, int y, int width, int height) {
         JTextField textField = new JTextField();
         textField.setBounds(x, y, width, height);
-        textField.setFont(textFiledFont);
+       // textField.setFont(textFiledFont);
         return textField;
     }
 

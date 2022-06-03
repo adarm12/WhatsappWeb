@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CreateNew extends JComboBox {
-    public static final Font myFont = new Font("Gisha", Font.BOLD, 18);
 
+    public static final Font myFont = new Font("Gisha", Font.BOLD, 30);
 
     public static JLabel newLabel(String text, int x, int y, int width, int height) {
         JLabel label = new JLabel(text);

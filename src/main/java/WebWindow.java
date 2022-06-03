@@ -6,14 +6,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import javax.swing.*;
 import java.awt.*;
-
 import java.util.List;
 
 public class WebWindow extends JPanel {
 
     Font font = new Font("Gisha", Font.BOLD, 30);
     Font textFiledFont = new Font("Gisha", Font.BOLD, 24);
-    public static final String CONTACT = "https://web.whatsapp.com/send?phone=";
+    //    public static final String CONTACT = "https://web.whatsapp.com/send?phone=";
+    public static final String CONTACT = "https://api.whatsapp.com/send?phone=";
 
     public static final int ENTER_BUTTON_X = 100, ENTER_BUTTON_Y = 700, ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
     public static final int GENERAL_WIDTH = 400, GENERAL_HEIGHT = 50;
@@ -65,6 +65,8 @@ public class WebWindow extends JPanel {
         this.messageForUser = newLabel("", 200, 200, 500, 80);
         this.add(this.messageForUser);
 
+        this.successfullyEnterLabel.setBounds(ENTER_BUTTON_X, ENTER_BUTTON_Y, ENTER_BUTTON_WIDTH, ENTER_BUTTON_HEIGHT);
+        this.add(successfullyEnterLabel);
 
         this.background = new ImageIcon("background.png");
         this.setVisible(true);
@@ -89,10 +91,25 @@ public class WebWindow extends JPanel {
                 web.get(CONTACT + PhoneNumber.formatPhoneNumber(phone));
                 web.manage().window().maximize();
 
+//                if (messageClass.contains("message-in")){
+//                    WebElement comment=this.lastMessage.findElement(By.cssSelector("span[dir='rtl']"));
+//                    this.comment=comment.getText();
+//                    System.out.println(this.comment);
+//                    break;
+
+                WebElement chet = web.findElement(By.id("action-button"));
+                chet.click();
+                WebElement linkId = web.findElement(By.id("fallback_block"));
+                List<WebElement> linkElement = linkId.findElements(By.tagName("a"));
+                String chatLink = linkElement.get(1).getAttribute("href");
+                web.get(chatLink);
+                connection(web);
+
+
 //                List<WebElement> menu = web.findElements(By.linkText("עזרה בשביל להתחיל?"));
 //                System.out.println("menu" + menu.size());
 //                System.out.println(menu.get(0).isDisplayed());
-                connection(web);
+//                connection(web);
 
 
 //                while (menu.size() != 1) {
@@ -101,9 +118,9 @@ public class WebWindow extends JPanel {
 //                                ENTER_LABEL_X, 500, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
 //                }
 
-                this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
-                this.add(successfullyEnterLabel);
-                this.enterButton.setVisible(false);
+//                this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
+//                this.add(successfullyEnterLabel);
+//                this.enterButton.setVisible(false);
 
             }
         });
@@ -138,7 +155,7 @@ public class WebWindow extends JPanel {
                 if (this.connect != null) {
                     System.out.println("found");
                     this.successfullyEnterLabel.setText("התתחברות בוצעה בהצלחה!");
-                    this.add(successfullyEnterLabel);
+//                    this.add(successfullyEnterLabel);
                     this.enterButton.setVisible(false);
                 }
 

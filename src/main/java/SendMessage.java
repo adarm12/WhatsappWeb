@@ -21,18 +21,33 @@ public class SendMessage {
     }
 
     public void sendMessage(ChromeDriver web) {
+        List<WebElement> chatWindow = null;
+        try {
+            chatWindow = web.findElements(By.tagName("footer"));
+            System.out.println("footer" + chatWindow.size());
+            List<WebElement> messageField = chatWindow.get(0).findElements(By.className("_1UWac _1LbR4"));
+            System.out.println("clicl" + messageField.size());
+            messageField.get(0).sendKeys(this.messageToSend);
+            System.out.println("send");
 
-        List<WebElement> chatWindow = web.findElements(By.className("_6h3Ps"));
-        System.out.println("mess/" + chatWindow.size());
+        } catch (Exception e) {
+            if (chatWindow == null)
+                sendMessage(web);
+        }
+    }
 
-        List<WebElement> messageField = chatWindow.get(0).findElements(By.className("_1UWac _1LbR4"));
-        System.out.println("clicl" + messageField.size());
+    public WebElement readyToSend(ChromeDriver web) {
+        WebElement chatWindowFiled = null;
+        List<WebElement> chatWindow = null;
+        try {
 
-        messageField.get(0).click();
-        messageField.get(0).sendKeys(this.messageToSend);
-        System.out.println("send");
-
-
+            System.out.println("mess/" + chatWindow.size());
+            chatWindowFiled = chatWindow.get(0);
+        } catch (Exception e) {
+            if (chatWindow.size() == 0)
+                readyToSend(web);
+        }
+        return chatWindowFiled;
     }
 //
 //    public ChromeDriver sendMessage(ChromeDriver driver, String text) {

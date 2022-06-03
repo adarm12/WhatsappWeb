@@ -127,12 +127,14 @@ public class WebWindow extends JPanel {
                     System.out.println("found");
                     this.successfullyEnterLabel.setText(SUCCESSFULLY_MESSAGE);
                     this.enterButton.setVisible(false);
+                    new Thread(() ->{
+                        SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
+                    }).start();
                 }
             } catch (Exception e) {
                 connection();
             }
         }).start();
-        SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
         return this.web;
     }
 

@@ -92,13 +92,13 @@ public class WebWindow extends JPanel {
         this.enterButton.addActionListener((event) -> {
             String phone = this.phoneNumberTextField.getText();
             if (this.messageTextField.getText().equals("") && this.phoneNumberTextField.getText().equals(""))
-                this.messageForUser.setText("יש להכניס מספר טלפון תקין והודעה לשליחה");
+                this.messageForUser.setText("יש להכניס מספר טלפון תקין והודעה לשליחה.");
             else if (this.phoneNumberTextField.getText().equals(""))
-                this.messageForUser.setText("יש להכניס מספר טלפון");
+                this.messageForUser.setText("יש להכניס מספר טלפון.");
             else if (!PhoneNumber.isValidPhoneNumber(phone))
                 this.messageForUser.setText("יש להכניס מספר תקין.");
             else if (this.messageTextField.getText().equals(""))
-                this.messageForUser.setText("יש להכניס הודעה");
+                this.messageForUser.setText("יש להכניס הודעה.");
 
             if (PhoneNumber.isValidPhoneNumber(phone) && (!this.messageTextField.getText().equals(""))) {
                 this.messageForUser.setVisible(false);

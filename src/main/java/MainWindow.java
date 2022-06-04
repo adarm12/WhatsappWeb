@@ -21,9 +21,9 @@ public class MainWindow extends JFrame {
         ChromeOptions chromeOptions1 = new ChromeOptions();
         chromeOptions1.addArguments("user-data-air=C:\\Users\\shani\\AppData\\Local\\Temp\\scoped_dir4008_2001821348\\Default");
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\adarm\\Downloads\\chromedriver_win32 (8)\\chromedriver.exe");
-        ChromeOptions chromeOptions2 = new ChromeOptions();
-        chromeOptions2.addArguments("user-data-air=C:\\Users\\adarm\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\n");
+//        System.setProperty("webdriver.chrome.driver", "C:\\Users\\adarm\\Downloads\\chromedriver_win32 (8)\\chromedriver.exe");
+//        ChromeOptions chromeOptions2 = new ChromeOptions();
+//        chromeOptions2.addArguments("user-data-air=C:\\Users\\adarm\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\n");
 
         WebWindow webWindow = new WebWindow(WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT);
         this.add(webWindow);

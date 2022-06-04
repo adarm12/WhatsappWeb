@@ -73,15 +73,14 @@ public class WebWindow extends JPanel {
         this.add(this.messageTextField);
 
         this.messageForUser = CreateNew.newLabel("", width - GENERAL_WIDTH - GENERAL_WIDTH / 2,
-                this.messageTextField.getY() + this.messageTextField.getHeight() + MARGIN_BETWEEN , MESSAGE_TEXT_WIDTH, GENERAL_HEIGHT);
-       this.messageForUser.setFont(new Font("Gisha", Font.BOLD, 45));
+                this.messageTextField.getY() + this.messageTextField.getHeight() + MARGIN_BETWEEN, MESSAGE_TEXT_WIDTH, GENERAL_HEIGHT);
+        this.messageForUser.setFont(new Font("Gisha", Font.BOLD, 45));
         this.add(this.messageForUser);
 
         this.successMessageLabel = CreateNew.newLabel("", ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
         this.add(this.successMessageLabel);
 
-        this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:",STATUS_LABEL_X, PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
-        this.add(this.statusTitle);
+        this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:", 50, y + 200, width / 2, height / 5);
 
         this.connect = null;
         this.background = new ImageIcon("web.jpg");
@@ -130,10 +129,12 @@ public class WebWindow extends JPanel {
                     this.enterButton.setVisible(false);
                     new Thread(() -> {
                         SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
-                   if (sendMessage.isSend()) {
-                       this.successMessageLabel.setText("ההודעה נשלחה בהצלחה!");
-                       new StatusMessage(web);
-                   }
+                        if (sendMessage.isSend()) {
+                            this.successMessageLabel.setText("ההודעה נשלחה בהצלחה!");
+                            this.add(new StatusMessage(this.statusTitle, web));
+                            this.add(this.statusTitle);
+
+                        }
                     }).start();
                 }
             } catch (Exception e) {
@@ -155,22 +156,13 @@ public class WebWindow extends JPanel {
         graphics.drawImage(this.titleIcon.getImage(), TITLE_ICON_X, TITLE_ICON_Y,
                 TITLE_HEIGHT, TITLE_HEIGHT, null);
     }
-
-
-    public JLabel getSuccessMessageLabel() {
-        return successMessageLabel;
+    public JLabel getStatusTitle() {
+        return statusTitle;
     }
 
-    public void setSuccessMessageLabel(JLabel successMessageLabel) {
-        this.successMessageLabel = successMessageLabel;
+    public void setStatusTitle(JLabel statusTitle) {
+        this.statusTitle = statusTitle;
     }
 
-    public JLabel getMessageForUser() {
-        return messageForUser;
-    }
-
-    public void setMessageForUser(JLabel messageForUser) {
-        this.messageForUser = messageForUser;
-    }
 }
 

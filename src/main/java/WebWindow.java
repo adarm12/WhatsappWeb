@@ -80,7 +80,8 @@ public class WebWindow extends JPanel {
         this.successMessageLabel = CreateNew.newLabel("", ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
         this.add(this.successMessageLabel);
 
-        this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:", 50, y + 200, width / 2, height / 5);
+        this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:",STATUS_LABEL_X, PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
+//        this.add(this.statusTitle);
 
         this.connect = null;
         this.background = new ImageIcon("web.jpg");
@@ -131,8 +132,10 @@ public class WebWindow extends JPanel {
                         SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
                         if (sendMessage.isSend()) {
                             this.successMessageLabel.setText("ההודעה נשלחה בהצלחה!");
-                            this.add(new StatusMessage(this.statusTitle, web));
-                            this.add(this.statusTitle);
+                            StatusMessage statusMessage = new StatusMessage(this.statusTitle, web);
+                            this.add(statusMessage);
+                            statusMessage.applyStatus();
+                            this.add(this.statusTitle.setText(statusMessage.applyStatus()));
 
                         }
                     }).start();

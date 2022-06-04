@@ -44,17 +44,16 @@ public class StatusMessage extends JPanel {
         } catch (Exception e) {
             status(web);
         }
-        applyStatus();
-        System.out.println(this.status);
     }
 
 
-    public void applyStatus() {
+    public String applyStatus() {
+        String status = "נשלחה";
         if (this.isAccepted)
             this.status.setText("נמסרה");
         if (this.isSeen)
             this.status.setText("נקראה");
-
+        return status;
     }
 
 

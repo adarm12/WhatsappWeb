@@ -14,6 +14,7 @@ public class StatusMessage {
 
 
     public StatusMessage(ChromeDriver web) {
+        isSend = true;
         status(web);
 
     }
@@ -37,4 +38,5 @@ public class StatusMessage {
             }
         }
     }
+
 }

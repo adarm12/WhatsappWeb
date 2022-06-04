@@ -22,10 +22,16 @@ public class StatusMessage {
         WebElement messageBox = null;
         try {
             messageBox = web.findElement(By.id("main"));
-//            System.out.println("box" + messageBox.size());
-//            System.out.println(messageBox.getText());
-            List<WebElement> tagMessage = messageBox.findElements(By.className("_1beEj"));
-            System.out.println("tag" + tagMessage.size());
+            List<WebElement> tag = messageBox.findElements(By.className("_3K4-L"));
+            System.out.println("tag" + tag.size());
+            List<WebElement> after = tag.get(0).findElements(By.className("_2wUmf message-out focusable-list-item"));
+            System.out.println("after" + after.size());
+//            List<WebElement> tagMessage = messageBox.findElements(By.className("_1beEj"));
+//            System.out.println("tag" + tagMessage.size());
+//            List<WebElement> afterTag = tagMessage.get(0).findElements(By.tagName("span"));
+//            System.out.println("after" + afterTag.size());
+//            System.out.println(afterTag.get(0).getText());
+//            System.out.println(afterTag.get(0).getAttribute("span"));
         } catch (Exception e) {
             if (messageBox == null) {
                 status(web);

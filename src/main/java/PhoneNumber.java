@@ -1,6 +1,6 @@
 public class PhoneNumber {
 
-    public static final int MAX_LENGTH_PHONE_NUMBER = 12;
+    public static final int MIN_LENGTH_PHONE_NUMBER = 10, MAX_LENGTH_PHONE_NUMBER = 12;
     public static final String PHONE_START = "05", ISRAELI_AREA_CODE = "9725";
 
     private String phoneNum;
@@ -45,7 +45,7 @@ public class PhoneNumber {
 
     public static boolean isValidPhoneNumber(String phoneNum) {
         boolean isValid = false;
-        if (phoneNum.length() > 0) {
+        if (phoneNum.length() == MIN_LENGTH_PHONE_NUMBER || phoneNum.length() == MAX_LENGTH_PHONE_NUMBER) {
             phoneNum = formatPhoneNumber(phoneNum);
             if (phoneNum.length() == MAX_LENGTH_PHONE_NUMBER)
                 isValid = true;

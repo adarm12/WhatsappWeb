@@ -21,16 +21,20 @@ public class StatusMessage {
     public void status(ChromeDriver web) {
         WebElement messageBox = null;
         try {
-            messageBox = web.findElement(By.id("main"));
-//            System.out.println("box" + messageBox.size());
-//            System.out.println(messageBox.getText());
-            List<WebElement> tagMessage = messageBox.findElements(By.className("_1beEj"));
-            System.out.println("tag" + tagMessage.size());
-        } catch (Exception e) {
+            while (true) {
+                messageBox = web.findElement(By.id("main"));
+                List<WebElement> tagMessage = messageBox.findElements(By.className("_1beEj"));
+                System.out.println("tag" + tagMessage.size());
+                List<WebElement> afterTag = tagMessage.get(tagMessage.size() - 1).findElements(By.tagName("span"));
+                System.out.println("after" + afterTag.size());
+                String status = afterTag.get(1).getAttribute("aria-label");
+                System.out.println(status);
+            }
+        } catch (
+                Exception e) {
             if (messageBox == null) {
                 status(web);
             }
         }
     }
-
 }

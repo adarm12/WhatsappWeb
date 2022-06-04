@@ -36,7 +36,7 @@ public class SendMessage {
 //            clickSend(web);
 
         } catch (Exception e) {
-//            if (chatWindow.size() == 0)
+            if (chatWindow.size() == 0)
             sendMessage(web);
         }
     }

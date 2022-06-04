@@ -22,6 +22,7 @@ public class WebWindow extends JPanel {
     public static final int MESSAGE_TITLE_MARGIN = 310;
     public static final int MESSAGE_TEXT_MARGIN_X = 210, MESSAGE_TEXT_WIDTH = 500, MESSAGE_TEXT_HEIGHT = 100;
     public static final int ENTER_LABEL_X = 100, ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
+    public static final int STATUS_LABEL_X = 300;
 
     private JLabel title;
     private ImageIcon titleIcon;
@@ -33,6 +34,8 @@ public class WebWindow extends JPanel {
     private JLabel messageTitle;
     private JTextField messageTextField;
     private JLabel messageForUser;
+
+    private JLabel statusTitle;
 
     private ChromeDriver web;
     private WebElement connect;
@@ -54,27 +57,31 @@ public class WebWindow extends JPanel {
 
         this.phoneNumTitle = CreateNew.newLabel("הכנס מספר פלאפון: ", width - GENERAL_WIDTH,
                 PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
-        this.add(phoneNumTitle);
+        this.add(this.phoneNumTitle);
 
-        this.phoneNumberTextField = CreateNew.newTextField(phoneNumTitle.getX() + phoneNumTitle.getWidth() - GENERAL_WIDTH,
-                phoneNumTitle.getY() + phoneNumTitle.getHeight(), GENERAL_WIDTH, GENERAL_HEIGHT);
-        this.add(phoneNumberTextField);
+        this.phoneNumberTextField = CreateNew.newTextField(this.phoneNumTitle.getX() + this.phoneNumTitle.getWidth() - GENERAL_WIDTH,
+                this.phoneNumTitle.getY() + this.phoneNumTitle.getHeight(), GENERAL_WIDTH, GENERAL_HEIGHT);
+        this.add(this.phoneNumberTextField);
 
         this.messageTitle = CreateNew.newLabel("הכנס הודעה: ", width - MESSAGE_TITLE_MARGIN,
-                phoneNumberTextField.getY() + MARGIN_BETWEEN, GENERAL_WIDTH, GENERAL_HEIGHT);
+                this.phoneNumberTextField.getY() + MARGIN_BETWEEN, GENERAL_WIDTH, GENERAL_HEIGHT);
         this.messageTitle.setForeground(Color.WHITE);
-        this.add(messageTitle);
+        this.add(this.messageTitle);
 
-        this.messageTextField = CreateNew.newTextField(messageTitle.getX() + messageTitle.getWidth() - MESSAGE_TEXT_WIDTH - MESSAGE_TEXT_MARGIN_X,
-                messageTitle.getY() + messageTitle.getHeight(), MESSAGE_TEXT_WIDTH, MESSAGE_TEXT_HEIGHT);
-        this.add(messageTextField);
+        this.messageTextField = CreateNew.newTextField(this.messageTitle.getX() + this.messageTitle.getWidth() - MESSAGE_TEXT_WIDTH - MESSAGE_TEXT_MARGIN_X,
+                this.messageTitle.getY() + this.messageTitle.getHeight(), MESSAGE_TEXT_WIDTH, MESSAGE_TEXT_HEIGHT);
+        this.add(this.messageTextField);
 
-        this.messageForUser = CreateNew.newLabel("", 200, 200, 500, 80);
+        this.messageForUser = CreateNew.newLabel("", width - GENERAL_WIDTH - GENERAL_WIDTH / 2,
+                this.messageTextField.getY() + this.messageTextField.getHeight() + MARGIN_BETWEEN , MESSAGE_TEXT_WIDTH, GENERAL_HEIGHT);
+       this.messageForUser.setFont(new Font("Gisha", Font.BOLD, 45));
         this.add(this.messageForUser);
 
         this.successMessageLabel = CreateNew.newLabel("", ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-        this.add(successMessageLabel);
+        this.add(this.successMessageLabel);
 
+        this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:",STATUS_LABEL_X, PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
+        this.add(this.statusTitle);
 
         this.connect = null;
         this.background = new ImageIcon("web.jpg");
@@ -119,13 +126,14 @@ public class WebWindow extends JPanel {
             try {
                 this.connect = this.web.findElement(By.id("side"));
                 if (this.connect != null) {
-                    System.out.println("found");
                     this.successMessageLabel.setText("ההתחברות בוצעה בהצלחה!");
                     this.enterButton.setVisible(false);
                     new Thread(() -> {
                         SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
-                   if (sendMessage.isSend())
+                   if (sendMessage.isSend()) {
                        this.successMessageLabel.setText("ההודעה נשלחה בהצלחה!");
+                       new StatusMessage(web);
+                   }
                     }).start();
                 }
             } catch (Exception e) {

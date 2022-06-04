@@ -1,5 +1,4 @@
 
-import com.sun.prism.paint.Stop;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,8 +12,8 @@ public class WebWindow extends JPanel {
 
     public static final String CONTACT = "https://api.whatsapp.com/send?phone=";
 
-    public static final int TITLE_Y = 50, TITLE_WIDTH = 900 , TITLE_HEIGHT = 100;
-    public static final int TITLE_ICON_X = 1000,TITLE_ICON_Y = 50;
+    public static final int TITLE_Y = 50, TITLE_WIDTH = 900, TITLE_HEIGHT = 100;
+    public static final int TITLE_ICON_X = 1000, TITLE_ICON_Y = 50;
 
     public static final int ENTER_BUTTON_X = 100, ENTER_BUTTON_Y = 700, ENTER_BUTTON_WIDTH = 250, ENTER_BUTTON_HEIGHT = 100;
     public static final int GENERAL_WIDTH = 400, GENERAL_HEIGHT = 50;
@@ -23,13 +22,12 @@ public class WebWindow extends JPanel {
     public static final int MESSAGE_TITLE_MARGIN = 310;
     public static final int MESSAGE_TEXT_MARGIN_X = 210, MESSAGE_TEXT_WIDTH = 500, MESSAGE_TEXT_HEIGHT = 100;
     public static final int ENTER_LABEL_X = 100, ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
-    public static final String SUCCESSFULLY_MESSAGE = "התתחברות בוצעה בהצלחה!";
 
     private JLabel title;
     private ImageIcon titleIcon;
     private ImageIcon background;
     private JButton enterButton;
-    private JLabel successfullyEnterLabel;
+    private JLabel successMessageLabel;
     private JLabel phoneNumTitle;
     private JTextField phoneNumberTextField;
     private JLabel messageTitle;
@@ -44,7 +42,7 @@ public class WebWindow extends JPanel {
         this.setBounds(x, y, width, height);
         this.setLayout(null);
 
-        this.title = CreateNew.newLabel("WhatsApp Web",width / 2 - TITLE_WIDTH / 2,TITLE_Y, TITLE_WIDTH,TITLE_HEIGHT);
+        this.title = CreateNew.newLabel("WhatsApp Web", width / 2 - TITLE_WIDTH / 2, TITLE_Y, TITLE_WIDTH, TITLE_HEIGHT);
         this.title.setFont(new Font("Gisha", Font.BOLD, 100));
         this.add(this.title);
 
@@ -54,7 +52,7 @@ public class WebWindow extends JPanel {
         this.add(this.enterButton);
         enter();
 
-        this.phoneNumTitle = CreateNew.newLabel("הכנס מספר פלאפון: ",width - GENERAL_WIDTH,
+        this.phoneNumTitle = CreateNew.newLabel("הכנס מספר פלאפון: ", width - GENERAL_WIDTH,
                 PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
         this.add(phoneNumTitle);
 
@@ -74,8 +72,8 @@ public class WebWindow extends JPanel {
         this.messageForUser = CreateNew.newLabel("", 200, 200, 500, 80);
         this.add(this.messageForUser);
 
-        this.successfullyEnterLabel = CreateNew.newLabel("", ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
-        this.add(successfullyEnterLabel);
+        this.successMessageLabel = CreateNew.newLabel("", ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
+        this.add(successMessageLabel);
 
 
         this.connect = null;
@@ -96,7 +94,7 @@ public class WebWindow extends JPanel {
                 this.messageForUser.setText("יש להכניס הודעה");
 
             if (PhoneNumber.isValidPhoneNumber(phone) && (!this.messageTextField.getText().equals(""))) {
-                this.messageForUser.setText("תקין");
+                this.messageForUser.setVisible(false);
 
                 this.web = new ChromeDriver();
                 this.web.get(CONTACT + PhoneNumber.formatPhoneNumber(phone));
@@ -122,10 +120,12 @@ public class WebWindow extends JPanel {
                 this.connect = this.web.findElement(By.id("side"));
                 if (this.connect != null) {
                     System.out.println("found");
-                    this.successfullyEnterLabel.setText(SUCCESSFULLY_MESSAGE);
+                    this.successMessageLabel.setText("ההתחברות בוצעה בהצלחה!");
                     this.enterButton.setVisible(false);
-                    new Thread(() ->{
+                    new Thread(() -> {
                         SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
+                   if (sendMessage.isSend())
+                       this.successMessageLabel.setText("ההודעה נשלחה בהצלחה!");
                     }).start();
                 }
             } catch (Exception e) {
@@ -149,5 +149,20 @@ public class WebWindow extends JPanel {
     }
 
 
+    public JLabel getSuccessMessageLabel() {
+        return successMessageLabel;
+    }
+
+    public void setSuccessMessageLabel(JLabel successMessageLabel) {
+        this.successMessageLabel = successMessageLabel;
+    }
+
+    public JLabel getMessageForUser() {
+        return messageForUser;
+    }
+
+    public void setMessageForUser(JLabel messageForUser) {
+        this.messageForUser = messageForUser;
+    }
 }
 

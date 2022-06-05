@@ -25,6 +25,7 @@ public class StatusMessage extends JPanel {
         this.status = status;
     }
 
+
     public void status(ChromeDriver web) {
         try {
             new Thread(() -> {

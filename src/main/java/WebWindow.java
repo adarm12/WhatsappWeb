@@ -135,7 +135,6 @@ public class WebWindow extends JPanel {
                             StatusMessage statusMessage = new StatusMessage(this.statusTitle, web);
                             this.add(statusMessage);
                             new Thread(() -> {
-                            //    String status = statusMessage.applyStatus();
                                 this.add(this.statusTitle);
                                 this.statusTitle.setText(statusMessage.getStatus().getText());
                             }).start();

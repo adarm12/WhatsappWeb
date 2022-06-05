@@ -25,7 +25,6 @@ public class StatusMessage extends JPanel {
         this.status = status;
     }
 
-
     public void status(ChromeDriver web) {
         try {
             new Thread(() -> {
@@ -35,6 +34,7 @@ public class StatusMessage extends JPanel {
 
                     List<WebElement> afterTag = tagMessage.get(tagMessage.size() - 1).findElements(By.tagName("span"));
                     String statusWeb = afterTag.get(1).getAttribute("aria-label");
+
                     new Thread(() -> {
                         if (statusWeb.contains("נמסרה")) {
                             this.isAccepted = true;
@@ -46,6 +46,7 @@ public class StatusMessage extends JPanel {
                             System.out.println("נקראה");
                         }
                     }).start();
+
                 }
             }).start();
             Thread.sleep(3000);

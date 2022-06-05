@@ -53,17 +53,6 @@ public class StatusMessage extends JPanel {
         }
     }
 
-//
-//    public String applyStatus() {
-//        String status = "נשלחה";
-//        if (this.isAccepted)
-//            this.status.setText("נמסרה");
-//        if (this.isSeen)
-//            this.status.setText("נקראה");
-//        return status;
-//    }
-//
-
     public JLabel getStatus() {
         return status;
     }

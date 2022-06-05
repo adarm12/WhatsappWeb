@@ -101,8 +101,7 @@ public class WebWindow extends JPanel {
                 this.messageForUser.setText("יש להכניס הודעה.");
 
             if (PhoneNumber.isValidPhoneNumber(phone) && (!this.messageTextField.getText().equals(""))) {
-                this.messageForUser.setVisible(false);
-
+                hideD();
                 this.web = new ChromeDriver();
                 this.web.get(CONTACT + PhoneNumber.formatPhoneNumber(phone));
                 web.manage().window().maximize();
@@ -121,13 +120,20 @@ public class WebWindow extends JPanel {
         });
     }
 
+    public void hideD() {
+        this.messageForUser.setVisible(false);
+        this.phoneNumberTextField.setEnabled(false);
+        this.messageTextField.setEnabled(false);
+        this.enterButton.setVisible(false);
+    }
+
     public ChromeDriver connection() {
         new Thread(() -> {
             try {
+                this.successMessageLabel.setText("מתחבר.. ");
                 this.connect = this.web.findElement(By.id("side"));
                 if (this.connect != null) {
                     this.successMessageLabel.setText("ההתחברות בוצעה בהצלחה!");
-                    this.enterButton.setVisible(false);
                     new Thread(() -> {
                         SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
                         if (sendMessage.isSend()) {

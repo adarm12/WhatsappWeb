@@ -14,6 +14,7 @@ public class StatusMessage extends JPanel {
     private boolean isSend; // הודעה שנשלחה
     private boolean isAccepted; // הודעה שנשלחה והתקבלה
     private boolean isSeen; // וי כחול - הודעה שנקראה
+    private boolean isMessageAccepted;
     private String messageAccepted;
 
     private JLabel status;
@@ -22,6 +23,7 @@ public class StatusMessage extends JPanel {
         this.isSend = true;
         this.isAccepted = false;
         this.isSeen = false;
+        this.isMessageAccepted = false;
         status(web);
         this.status = status;
     }
@@ -46,7 +48,7 @@ public class StatusMessage extends JPanel {
                     }).start();
                 }
             }).start();
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (Exception e) {
             status(web);
         }
@@ -54,17 +56,19 @@ public class StatusMessage extends JPanel {
 
     public void incomingMessage(ChromeDriver web) {
         try {
+            List<WebElement> messagesList = web.findElements(By.className("_22Msk"));
+            System.out.println("list" + messagesList.size());
             new Thread(() -> {
-                List<WebElement> messagesList = web.findElements(By.className("_3K4-L"));
-                System.out.println("list" + messagesList.size());
-                List<WebElement> incomingMessages = messagesList.get(0).findElements(By.className("_22Msk"));
-                System.out.println("in" + incomingMessages.size());
-                List<WebElement> lastTag = incomingMessages.get(0).findElements(By.className("_1Gy50"));
-                System.out.println("last" + lastTag.size());
-                List<WebElement> tag = lastTag.get(0).findElements(By.cssSelector("#main > div._2gzeB > div > div._33LGR > div._3K4-L > div:nth-child(17) > div > div.Nm1g1._22AX6 > div._22Msk > div.copyable-text > div > span.i0jNr.selectable-text.copyable-text"));
-                System.out.println("text: " + tag.get(0).getText());
-//                String tagText = tag.get(tag.size() - 1).getAttribute("dir");
-//                System.out.println(tagText);
+                while (!this.isMessageAccepted) {
+                    List<WebElement> lastMessage = messagesList.get(0).findElements(By.className("_1Gy50"));
+                    System.out.println("last" + lastMessage.size());
+                    List<WebElement> span = lastMessage.get(0).findElements(By.tagName("span"));
+                    System.out.println("span " + span.size());
+                    List<WebElement> m = lastMessage.get(0).findElements(By.xpath("//*[@id=\"main\"]/div[3]/div/div[2]/div[3]/div[35]/div/div[1]/div[1]/div[1]/div/span[1]"));
+                    this.isMessageAccepted = true;
+                    this.messageAccepted = m.get(0).getText();
+                    System.out.println(this.messageAccepted);
+                }
             }).start();
         } catch (Exception e) {
             incomingMessage(web);

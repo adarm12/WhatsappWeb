@@ -18,7 +18,9 @@ public class StatusMessage extends JPanel {
     private JLabel status;
 
     public StatusMessage(JLabel status, ChromeDriver web) {
-        isSend = true;
+        this.isSend = true;
+        this.isAccepted = false;
+        this.isSeen = false;
         status(web);
         this.status = status;
     }
@@ -26,37 +28,49 @@ public class StatusMessage extends JPanel {
     public void status(ChromeDriver web) {
         try {
             new Thread(() -> {
-                while (!isSeen) {
+                while (!this.isSeen) {
                     WebElement messageBox = web.findElement(By.id("main"));
                     List<WebElement> tagMessage = messageBox.findElements(By.className("_1beEj"));
 
                     List<WebElement> afterTag = tagMessage.get(tagMessage.size() - 1).findElements(By.tagName("span"));
-
-                    String status = afterTag.get(1).getAttribute("aria-label");
-
-                    if (status.contains("נמסרה"))
-                        isAccepted = true;
-                    else if (status.contains("נקראה"))
-                        isSeen = true;
+                    String statusWeb = afterTag.get(1).getAttribute("aria-label");
+                    new Thread(() -> {
+                        if (statusWeb.contains("נמסרה")) {
+                            this.isAccepted = true;
+                            this.status.setText("נמסרה");
+                            System.out.println("נמסרה");
+                        } else if (statusWeb.contains("נקראה")) {
+                            this.isSeen = true;
+                            this.status.setText("נקראה");
+                            System.out.println("נקראה");
+                        }
+                    }).start();
                 }
             }).start();
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (Exception e) {
             status(web);
         }
     }
 
+//
+//    public String applyStatus() {
+//        String status = "נשלחה";
+//        if (this.isAccepted)
+//            this.status.setText("נמסרה");
+//        if (this.isSeen)
+//            this.status.setText("נקראה");
+//        return status;
+//    }
+//
 
-    public String applyStatus() {
-        String status = "נשלחה";
-        if (this.isAccepted)
-            this.status.setText("נמסרה");
-        if (this.isSeen)
-            this.status.setText("נקראה");
+    public JLabel getStatus() {
         return status;
     }
 
-
+    public void setStatus(JLabel status) {
+        this.status = status;
+    }
 }
 
 

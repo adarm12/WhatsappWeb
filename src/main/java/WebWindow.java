@@ -19,7 +19,7 @@ public class WebWindow extends JPanel {
     public static final int GENERAL_WIDTH = 400, GENERAL_HEIGHT = 50;
     public static final int PHONE_NUM_TITLE_Y = 250, PHONE_NUM_TITLE_WIDTH = 275;
     public static final int MARGIN_BETWEEN = 100;
-    public static final int MESSAGE_TITLE_MARGIN = 310;
+    public static final int MESSAGE_TITLE_MARGIN = 310, STATUS_MARGIN = 120;
     public static final int MESSAGE_TEXT_MARGIN_X = 210, MESSAGE_TEXT_WIDTH = 500, MESSAGE_TEXT_HEIGHT = 100;
     public static final int ENTER_LABEL_X = 100, ENTER_LABEL_Y = 700, ENTER_LABEL_WIDTH = 500, ENTER_LABEL_HEIGHT = 150;
     public static final int STATUS_LABEL_X = 300;
@@ -75,7 +75,6 @@ public class WebWindow extends JPanel {
 
         this.messageForUser = CreateNew.newLabel("", width - GENERAL_WIDTH - GENERAL_WIDTH / 2,
                 this.messageTextField.getY() + this.messageTextField.getHeight() + MARGIN_BETWEEN, MESSAGE_TEXT_WIDTH, GENERAL_HEIGHT);
-        this.messageForUser.setFont(new Font("Gisha", Font.BOLD, 45));
         this.add(this.messageForUser);
 
         this.successMessageLabel = CreateNew.newLabel("", ENTER_LABEL_X, ENTER_LABEL_Y, ENTER_LABEL_WIDTH, ENTER_LABEL_HEIGHT);
@@ -83,7 +82,7 @@ public class WebWindow extends JPanel {
 
         this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:", STATUS_LABEL_X, PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
         this.add(this.statusTitle);
-        this.status = CreateNew.newLabel("", STATUS_LABEL_X + 120, PHONE_NUM_TITLE_Y + GENERAL_HEIGHT, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
+        this.status = CreateNew.newLabel("", STATUS_LABEL_X + STATUS_MARGIN, PHONE_NUM_TITLE_Y + GENERAL_HEIGHT, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
 
         this.connect = null;
         this.background = new ImageIcon("web.jpg");
@@ -94,7 +93,7 @@ public class WebWindow extends JPanel {
         this.enterButton.addActionListener((event) -> {
             String phone = this.phoneNumberTextField.getText();
             if (this.messageTextField.getText().equals("") && this.phoneNumberTextField.getText().equals(""))
-                this.messageForUser.setText("יש להכניס מספר טלפון תקין והודעה לשליחה.");
+                this.messageForUser.setText("יש להכניס מס''ט והודעה לשליחה.");
             else if (this.phoneNumberTextField.getText().equals(""))
                 this.messageForUser.setText("יש להכניס מספר טלפון.");
             else if (!PhoneNumber.isValidPhoneNumber(phone))
@@ -172,5 +171,104 @@ public class WebWindow extends JPanel {
         this.status = statusTitle;
     }
 
+    public JLabel getTitle() {
+        return title;
+    }
+
+    public void setTitle(JLabel title) {
+        this.title = title;
+    }
+
+    public ImageIcon getTitleIcon() {
+        return titleIcon;
+    }
+
+    public void setTitleIcon(ImageIcon titleIcon) {
+        this.titleIcon = titleIcon;
+    }
+
+    public void setBackground(ImageIcon background) {
+        this.background = background;
+    }
+
+    public JButton getEnterButton() {
+        return enterButton;
+    }
+
+    public void setEnterButton(JButton enterButton) {
+        this.enterButton = enterButton;
+    }
+
+    public JLabel getSuccessMessageLabel() {
+        return successMessageLabel;
+    }
+
+    public void setSuccessMessageLabel(JLabel successMessageLabel) {
+        this.successMessageLabel = successMessageLabel;
+    }
+
+    public JLabel getPhoneNumTitle() {
+        return phoneNumTitle;
+    }
+
+    public void setPhoneNumTitle(JLabel phoneNumTitle) {
+        this.phoneNumTitle = phoneNumTitle;
+    }
+
+    public JTextField getPhoneNumberTextField() {
+        return phoneNumberTextField;
+    }
+
+    public void setPhoneNumberTextField(JTextField phoneNumberTextField) {
+        this.phoneNumberTextField = phoneNumberTextField;
+    }
+
+    public JLabel getMessageTitle() {
+        return messageTitle;
+    }
+
+    public void setMessageTitle(JLabel messageTitle) {
+        this.messageTitle = messageTitle;
+    }
+
+    public JTextField getMessageTextField() {
+        return messageTextField;
+    }
+
+    public void setMessageTextField(JTextField messageTextField) {
+        this.messageTextField = messageTextField;
+    }
+
+    public JLabel getMessageForUser() {
+        return messageForUser;
+    }
+
+    public void setMessageForUser(JLabel messageForUser) {
+        this.messageForUser = messageForUser;
+    }
+
+    public JLabel getStatus() {
+        return status;
+    }
+
+    public void setStatus(JLabel status) {
+        this.status = status;
+    }
+
+    public ChromeDriver getWeb() {
+        return web;
+    }
+
+    public void setWeb(ChromeDriver web) {
+        this.web = web;
+    }
+
+    public WebElement getConnect() {
+        return connect;
+    }
+
+    public void setConnect(WebElement connect) {
+        this.connect = connect;
+    }
 }
 

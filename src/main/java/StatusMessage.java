@@ -61,12 +61,36 @@ public class StatusMessage extends JPanel {
             new Thread(() -> {
                 while (!this.isMessageAccepted) {
                     returnElement(web);
-//                    List<WebElement> m = lastMessage.get(0).findElements(By.xpath("//*[@id=\"main\"]/div[3]/div/div[2]/div[3]/div[35]/div/div[1]/div[1]/div[1]/div/span[1]"));
                 }
             }).start();
         } catch (Exception e) {
             incomingMessage(web);
         }
+        new CreateReport("0529421123", "חחחחח", "vhh");
+    }
+
+    public WebElement returnElement1(ChromeDriver web) {
+        WebElement span2 = null;
+        try {
+            List<WebElement> messagesList = web.findElements(By.className("_22Msk"));
+            System.out.println("list" + messagesList.size());
+            List<WebElement> lastMessage = messagesList.get(messagesList.size() - 1).findElements(By.className("_1Gy50"));
+            System.out.println("last" + lastMessage.size());
+            List<WebElement> span = lastMessage.get(0).findElements(By.tagName("span"));
+            System.out.println("span " + span.size());
+            WebElement span1 = span.get(0).findElement(By.cssSelector("span"));
+            String messageAccepted = span1.getText();
+            System.out.println(messageAccepted);
+            System.out.println(messageAccepted);
+            if (span.get(0).getAttribute("tabindex").contains("0")) {
+                span2 = span.get(0).findElement(By.cssSelector("span"));
+                this.messageAccepted = span2.getText();
+                this.isMessageAccepted = true;
+            }
+        } catch (Exception e) {
+            returnElement(web);
+        }
+        return span2;
     }
 
     public WebElement returnElement(ChromeDriver web) {
@@ -81,15 +105,56 @@ public class StatusMessage extends JPanel {
             WebElement span1 = span.get(0).findElement(By.cssSelector("span"));
             String messageAccepted = span1.getText();
             System.out.println(messageAccepted);
+             System.out.println(messageAccepted);
             if (span.get(0).getAttribute("tabindex").contains("0")) {
                 span2 = span.get(0).findElement(By.cssSelector("span"));
-            }
+                this.messageAccepted = span2.getText();
+              }
         } catch (Exception e) {
             returnElement(web);
         }
         return span2;
     }
 
+    public boolean isSend() {
+        return isSend;
+    }
+
+    public void setSend(boolean send) {
+        isSend = send;
+    }
+
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
+    }
+
+    public boolean isSeen() {
+        return isSeen;
+    }
+
+    public void setSeen(boolean seen) {
+        isSeen = seen;
+    }
+
+    public boolean isMessageAccepted() {
+        return isMessageAccepted;
+    }
+
+    public void setMessageAccepted(boolean messageAccepted) {
+        isMessageAccepted = messageAccepted;
+    }
+
+    public String getMessageAccepted() {
+        return messageAccepted;
+    }
+
+    public void setMessageAccepted(String messageAccepted) {
+        this.messageAccepted = messageAccepted;
+    }
 
     public JLabel getStatus() {
         return status;

@@ -35,7 +35,19 @@ public class SendMessage {
         }
     }
 
+    public String getMessageToSend() {
+        return messageToSend;
+    }
+
+    public void setMessageToSend(String messageToSend) {
+        this.messageToSend = messageToSend;
+    }
+
     public boolean isSend() {
         return isSend;
+    }
+
+    public void setSend(boolean send) {
+        isSend = send;
     }
 }

@@ -82,9 +82,8 @@ public class WebWindow extends JPanel {
         this.add(this.successMessageLabel);
 
         this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:", STATUS_LABEL_X, PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
-//        this.add(this.statusTitle);
+        this.add(this.statusTitle);
         this.status = CreateNew.newLabel("", STATUS_LABEL_X + 120, PHONE_NUM_TITLE_Y + GENERAL_HEIGHT, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
-//        this.add(this.status);
 
         this.connect = null;
         this.background = new ImageIcon("web.jpg");
@@ -157,12 +156,6 @@ public class WebWindow extends JPanel {
         }).start();
         return this.web;
     }
-
-//                if (messageClass.contains("message-in")){
-//                    WebElement comment=this.lastMessage.findElement(By.cssSelector("span[dir='rtl']"));
-//                    this.comment=comment.getText();
-//                    System.out.println(this.comment);
-//                    break;
 
     public void paintComponent(Graphics graphics) {
         graphics.drawImage(this.background.getImage(), 0, 0,

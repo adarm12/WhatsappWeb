@@ -66,7 +66,6 @@ public class StatusMessage extends JPanel {
         } catch (Exception e) {
             incomingMessage(web);
         }
-        new CreateReport("0529421123", "חחחחח", "vhh");
     }
 
 
@@ -82,7 +81,7 @@ public class StatusMessage extends JPanel {
             if (span.get(0).getAttribute("tabindex").contains("0")) {
                 span2 = span.get(0).findElement(By.cssSelector("span"));
                 this.messageAccepted = span2.getText();
-              }
+            }
         } catch (Exception e) {
             returnElement(web);
         }

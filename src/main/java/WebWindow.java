@@ -36,6 +36,7 @@ public class WebWindow extends JPanel {
     private JLabel messageForUser;
 
     private JLabel statusTitle;
+    private JLabel status;
 
     private ChromeDriver web;
     private WebElement connect;
@@ -82,6 +83,8 @@ public class WebWindow extends JPanel {
 
         this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:", STATUS_LABEL_X, PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
 //        this.add(this.statusTitle);
+        this.status = CreateNew.newLabel("", STATUS_LABEL_X + 125, PHONE_NUM_TITLE_Y + + GENERAL_HEIGHT, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
+//        this.add(status);
 
         this.connect = null;
         this.background = new ImageIcon("web.jpg");
@@ -138,11 +141,15 @@ public class WebWindow extends JPanel {
                         SendMessage sendMessage = new SendMessage(this.messageTextField.getText(), this.web);
                         if (sendMessage.isSend()) {
                             this.successMessageLabel.setText("ההודעה נשלחה בהצלחה!");
-                            StatusMessage statusMessage = new StatusMessage(this.statusTitle, web);
+                            StatusMessage statusMessage = new StatusMessage(this.status, web);
                             this.add(statusMessage);
                             new Thread(() -> {
                                 this.add(this.statusTitle);
-                                this.statusTitle.setText(statusMessage.getStatus().getText());
+                                this.add(this.status);
+                                if (statusMessage.getStatus().getText().equals("נקראה")){
+                                    this.status.setForeground(Color.BLUE);
+                                }
+                                this.status.setText(statusMessage.getStatus().getText());
                             }).start();
                         }
                     }).start();

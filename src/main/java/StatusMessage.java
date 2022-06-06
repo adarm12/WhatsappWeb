@@ -69,43 +69,16 @@ public class StatusMessage extends JPanel {
         new CreateReport("0529421123", "חחחחח", "vhh");
     }
 
-    public WebElement returnElement1(ChromeDriver web) {
-        WebElement span2 = null;
-        try {
-            List<WebElement> messagesList = web.findElements(By.className("_22Msk"));
-            System.out.println("list" + messagesList.size());
-            List<WebElement> lastMessage = messagesList.get(messagesList.size() - 1).findElements(By.className("_1Gy50"));
-            System.out.println("last" + lastMessage.size());
-            List<WebElement> span = lastMessage.get(0).findElements(By.tagName("span"));
-            System.out.println("span " + span.size());
-            WebElement span1 = span.get(0).findElement(By.cssSelector("span"));
-            String messageAccepted = span1.getText();
-            System.out.println(messageAccepted);
-            System.out.println(messageAccepted);
-            if (span.get(0).getAttribute("tabindex").contains("0")) {
-                span2 = span.get(0).findElement(By.cssSelector("span"));
-                this.messageAccepted = span2.getText();
-                this.isMessageAccepted = true;
-            }
-        } catch (Exception e) {
-            returnElement(web);
-        }
-        return span2;
-    }
 
     public WebElement returnElement(ChromeDriver web) {
         WebElement span2 = null;
         try {
             List<WebElement> messagesList = web.findElements(By.className("_22Msk"));
-            System.out.println("list" + messagesList.size());
             List<WebElement> lastMessage = messagesList.get(messagesList.size() - 1).findElements(By.className("_1Gy50"));
-            System.out.println("last" + lastMessage.size());
             List<WebElement> span = lastMessage.get(0).findElements(By.tagName("span"));
-            System.out.println("span " + span.size());
             WebElement span1 = span.get(0).findElement(By.cssSelector("span"));
             String messageAccepted = span1.getText();
             System.out.println(messageAccepted);
-             System.out.println(messageAccepted);
             if (span.get(0).getAttribute("tabindex").contains("0")) {
                 span2 = span.get(0).findElement(By.cssSelector("span"));
                 this.messageAccepted = span2.getText();

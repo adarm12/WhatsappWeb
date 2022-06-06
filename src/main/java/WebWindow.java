@@ -83,8 +83,8 @@ public class WebWindow extends JPanel {
 
         this.statusTitle = CreateNew.newLabel("סטטוס ההודעה:", STATUS_LABEL_X, PHONE_NUM_TITLE_Y, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
 //        this.add(this.statusTitle);
-        this.status = CreateNew.newLabel("", STATUS_LABEL_X + 125, PHONE_NUM_TITLE_Y + + GENERAL_HEIGHT, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
-//        this.add(status);
+        this.status = CreateNew.newLabel("", STATUS_LABEL_X + 120, PHONE_NUM_TITLE_Y + GENERAL_HEIGHT, PHONE_NUM_TITLE_WIDTH, GENERAL_HEIGHT);
+//        this.add(this.status);
 
         this.connect = null;
         this.background = new ImageIcon("web.jpg");
@@ -146,9 +146,6 @@ public class WebWindow extends JPanel {
                             new Thread(() -> {
                                 this.add(this.statusTitle);
                                 this.add(this.status);
-                                if (statusMessage.getStatus().getText().equals("נקראה")){
-                                    this.status.setForeground(Color.BLUE);
-                                }
                                 this.status.setText(statusMessage.getStatus().getText());
                             }).start();
                         }
@@ -175,11 +172,11 @@ public class WebWindow extends JPanel {
     }
 
     public JLabel getStatusTitle() {
-        return statusTitle;
+        return status;
     }
 
     public void setStatusTitle(JLabel statusTitle) {
-        this.statusTitle = statusTitle;
+        this.status = statusTitle;
     }
 
 }

@@ -44,6 +44,7 @@ public class StatusMessage extends JPanel {
                         } else if (statusWeb.contains("נקראה")) {
                             this.isSeen = true;
                             this.status.setText("נקראה");
+                            this.status.setForeground(Color.BLUE);
                             incomingMessage(web);
                         }
                     }).start();
